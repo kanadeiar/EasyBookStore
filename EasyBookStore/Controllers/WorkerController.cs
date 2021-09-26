@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using EasyBookStore.Models;
 
 namespace EasyBookStore.Controllers
@@ -10,6 +11,11 @@ namespace EasyBookStore.Controllers
         public IActionResult Index()
         {
             return View(__Workers);
+        }
+
+        public IActionResult Details(int id)
+        {
+            return View(__Workers.First(w => w.Id == id));
         }
     }
 }
