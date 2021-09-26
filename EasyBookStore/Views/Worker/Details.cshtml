@@ -1,0 +1,20 @@
+﻿@model EasyBookStore.Models.Worker
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Сотрудник</title>
+</head>
+<body>
+    <h1>Детальные данные по сотруднику</h1>
+    <hr />
+    <a href="/">Главная страница</a> / <a href="/Worker/">Все сотрудники магазина</a>
+    <hr />
+    <p>Идентификатор: @Model.Id</p>
+    <p>Фамилия: @Model.LastName</p>
+    <p>Имя: @Model.FirstName</p>
+    <p>Отчество: @Model.Patronymic</p>
+    <p>Возраст: @Model.Age лет</p>
+</body>
+</html>
