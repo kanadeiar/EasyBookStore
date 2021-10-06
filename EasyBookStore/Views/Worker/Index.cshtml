@@ -1,40 +1,33 @@
-﻿@model IEnumerable<EasyBookStore.Models.Worker>
+﻿@model IEnumerable<Worker>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Сотрудники магазина</title>
-</head>
-<body>
+<div class="container">
     <h1>Сотрудники магазина</h1>
     <hr />
     <a href="/">Главная страница</a>
     <hr />
     <table>
         <thead>
-        <tr>
-            <th>№</th>
-            <th>Фамилия</th>
-            <th>Имя</th>
-            <th>Отчество</th>
-            <th>Возраст</th>
-            <th></th>
-        </tr>
+            <tr>
+                <th>№</th>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th>Возраст</th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var worker in Model)
-        {
-            <tr>
-                <td>@worker.Id</td>
-                <td>@worker.LastName</td>
-                <td>@worker.FirstName</td>
-                <td>@worker.Patronymic</td>
-                <td>@worker.Age</td>
-                <th>@Html.ActionLink("Детали","Details", new {Id = worker.Id})</th>
-            </tr>
-        }
+            @foreach (var worker in Model)
+            {
+                <tr>
+                    <td>@worker.Id</td>
+                    <td>@worker.LastName</td>
+                    <td>@worker.FirstName</td>
+                    <td>@worker.Patronymic</td>
+                    <td>@worker.Age</td>
+                    <th>@Html.ActionLink("Детали", "Details", new { Id = worker.Id })</th>
+                </tr>
+            }
         </tbody>
     </table>
-</body>
-</html>
+</div>
