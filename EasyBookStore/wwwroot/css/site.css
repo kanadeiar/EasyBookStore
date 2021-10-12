@@ -1,10 +1,5 @@
 ﻿@charset "UTF-8";
 
-{
-    margin: 0;
-    padding: 0;
-}
-
 /* Sticky footer styles -------------------------------------------------- */
 html {
     position: relative;
@@ -12,8 +7,12 @@ html {
 }
 
 body {
-    /* Margin bottom by footer height */
     margin-bottom: 80px;
+    background: #9dffd5;
+}
+
+.card {
+    background: #c5ffe6;
 }
 
 .footer {
