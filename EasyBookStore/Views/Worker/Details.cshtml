@@ -1,9 +1,13 @@
 ﻿@model Worker
 
+@{ 
+    ViewBag.Title = "Детальные данные по сотруднику";
+}
 <div class="container">
-    <h1>Детальные данные по сотруднику</h1>
+    <h1>@ViewBag.Title</h1>
     <hr />
-    <a href="/">Главная страница</a> / <a href="/Worker/">Все сотрудники магазина</a>
+    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Главная страница</a> 
+    / <a class="btn btn-outline-secondary" asp-controller="Worker" asp-action="Index">Все сотрудники магазина</a>
     <hr />
     <p>Идентификатор: @Model.Id</p>
     <p>Фамилия: @Model.LastName</p>

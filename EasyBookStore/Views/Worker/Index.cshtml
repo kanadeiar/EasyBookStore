@@ -3,7 +3,7 @@
 <div class="container">
     <h1>Сотрудники магазина</h1>
     <hr />
-    <a href="/">Главная страница</a>
+    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Главная страница</a>
     <hr />
     <table>
         <thead>
@@ -25,7 +25,7 @@
                     <td>@worker.FirstName</td>
                     <td>@worker.Patronymic</td>
                     <td>@worker.Age</td>
-                    <th>@Html.ActionLink("Детали", "Details", new { Id = worker.Id })</th>
+                    <td><a class="btn btn-outline-dark" asp-controller="Worker" asp-action="Details" asp-route-id="@worker.Id">Детали</a></td>
                 </tr>
             }
         </tbody>
