@@ -1,7 +1,11 @@
 ﻿@model IEnumerable<Worker>
 
+@{ 
+    ViewBag.Title = "Сотрудники магазина";
+}
+
 <div class="container">
-    <h1>Сотрудники магазина</h1>
+    <h1>@ViewBag.Title</h1>
     <hr />
     <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Главная страница</a>
     <hr />
@@ -25,7 +29,11 @@
                     <td>@worker.FirstName</td>
                     <td>@worker.Patronymic</td>
                     <td>@worker.Age</td>
-                    <td><a class="btn btn-outline-dark" asp-controller="Worker" asp-action="Details" asp-route-id="@worker.Id">Детали</a></td>
+                    <td>
+                        <a class="btn btn-outline-dark" asp-controller="Worker" asp-action="Details" asp-route-id="@worker.Id">
+                            <i class="fas fa-info"></i>
+                        </a>
+                    </td>
                 </tr>
             }
         </tbody>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using EasyBookStore.Models;
+using EasyBookStore.WebModels;
 
 namespace EasyBookStore.Controllers
 {
@@ -20,7 +21,16 @@ namespace EasyBookStore.Controllers
             if (worker is null)
                 return NotFound();
 
-            return View(worker);
+            var workerWebModel = new WorkerDetailsWebModel
+            {
+                Id = worker.Id,
+                FirstName = worker.FirstName,
+                LastName = worker.LastName,
+                Patronymic = worker.Patronymic,
+                Age = worker.Age,
+            };
+
+            return View(workerWebModel);
         }
     }
 }
