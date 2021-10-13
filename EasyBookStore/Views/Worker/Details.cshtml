@@ -1,20 +1,33 @@
-﻿@model EasyBookStore.Models.Worker
+﻿@model WorkerDetailsWebModel
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Сотрудник</title>
-</head>
-<body>
-    <h1>Детальные данные по сотруднику</h1>
+@{ 
+    ViewBag.Title = "Детальные данные по сотруднику";
+}
+
+<div class="container">
+    <h1>@ViewBag.Title</h1>
     <hr />
-    <a href="/">Главная страница</a> / <a href="/Worker/">Все сотрудники магазина</a>
+    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Главная страница</a>
+    / <a class="btn btn-outline-secondary" asp-controller="Worker" asp-action="Index">Все сотрудники магазина</a>
     <hr />
-    <p>Идентификатор: @Model.Id</p>
-    <p>Фамилия: @Model.LastName</p>
-    <p>Имя: @Model.FirstName</p>
-    <p>Отчество: @Model.Patronymic</p>
-    <p>Возраст: @Model.Age лет</p>
-</body>
-</html>
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Id)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Id)</dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.LastName)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.LastName)</dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.FirstName)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.FirstName)</dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Patronymic)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Patronymic)</dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Age)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Age) лет</dd>
+    </dl>
+</div>

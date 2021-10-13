@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewBag.Title - Магазин книг</title>
+
+    <partial name="Partial/Layout/_StylesPartial" />
+
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" href="~/favicon.png" sizes="500x500">
+
+    <base href="~/" />
+</head>
+<body>
+    <partial name="Partial/Layout/_HeaderPartial"/>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <partial name="Partial/Layout/_FooterPartial"/>
+
+    <partial name="Partial/Layout/_ScriptsPartial" />
+</body>
+</html>
