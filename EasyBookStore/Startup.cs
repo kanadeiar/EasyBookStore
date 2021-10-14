@@ -1,3 +1,4 @@
+using EasyBookStore.Infrestructure.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +29,8 @@ namespace EasyBookStore
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseMiddleware<DebugMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
