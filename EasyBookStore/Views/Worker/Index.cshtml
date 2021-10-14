@@ -19,6 +19,7 @@
                 <th>Возраст</th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -31,13 +32,18 @@
                     <td>@worker.Patronymic</td>
                     <td>@worker.Age</td>
                     <td>
-                        <a class="btn btn-outline-dark" asp-controller="Worker" asp-action="Details" asp-route-id="@worker.Id">
+                        <a class="btn btn-outline-info" asp-controller="Worker" asp-action="Details" asp-route-id="@worker.Id">
                             <i class="fas fa-info"></i>
                         </a>
                     </td>
                     <td>
                         <a class="btn btn-outline-dark" asp-controller="Worker" asp-action="Edit" asp-route-id="@worker.Id">
                             <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-danger" asp-controller="Worker" asp-action="Delete" asp-route-id="@worker.Id">
+                            <i class="fas fa-trash"></i>
                         </a>
                     </td>
                 </tr>

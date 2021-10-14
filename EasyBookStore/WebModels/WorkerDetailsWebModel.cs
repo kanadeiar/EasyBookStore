@@ -4,6 +4,7 @@ namespace EasyBookStore.WebModels
 {
     public class WorkerDetailsWebModel
     {
+        public int Id { get; set; }
         [Display(Name = "Имя")]
         public string FirstName { get; set; }
         [Display(Name = "Фамилия")]

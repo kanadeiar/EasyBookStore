@@ -1,0 +1,47 @@
+﻿@model WorkerEditWebModel
+
+@{
+    ViewBag.Title = "Удаление работника";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<hr />
+<a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Главная страница</a>
+    / <a class="btn btn-outline-secondary" asp-controller="Worker" asp-action="Index">Все сотрудники магазина</a>
+<hr />
+
+<h3>Вы действительно желаете удалить этого работника?</h3>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Patronymic)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Patronymic)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+    </dl>
+
+    <form asp-action="DeleteConfirmed" asp-route-id="@Model.Id">
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+    </form>
+</div>
