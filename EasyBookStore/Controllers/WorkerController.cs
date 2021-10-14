@@ -8,7 +8,7 @@ namespace EasyBookStore.Controllers
 {
     public class WorkerController : Controller
     {
-        private static readonly IEnumerable<Worker> __Workers = Worker.GetWorkers;
+        private static readonly IList<Worker> __Workers = Worker.GetWorkers;
         public IActionResult Index()
         {
             return View(__Workers);
@@ -16,12 +16,32 @@ namespace EasyBookStore.Controllers
 
         public IActionResult Details(int id)
         {
-            var worker = __Workers.First(w => w.Id == id);
+            var worker = __Workers.FirstOrDefault(w => w.Id == id);
 
             if (worker is null)
                 return NotFound();
 
             var workerWebModel = new WorkerDetailsWebModel
+            {
+                FirstName = worker.FirstName,
+                LastName = worker.LastName,
+                Patronymic = worker.Patronymic,
+                Age = worker.Age,
+            };
+
+            return View(workerWebModel);
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id is null)
+                return View(new WorkerEditWebModel());
+
+            var worker = __Workers.FirstOrDefault(w => w.Id == id);
+            if (worker is null)
+                return NotFound();
+
+            var model = new WorkerEditWebModel
             {
                 Id = worker.Id,
                 FirstName = worker.FirstName,
@@ -30,7 +50,26 @@ namespace EasyBookStore.Controllers
                 Age = worker.Age,
             };
 
-            return View(workerWebModel);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(WorkerEditWebModel model)
+        {
+            var worker = new Worker
+            {
+                Id = model.Id,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Patronymic = model.Patronymic,
+                Age = model.Age,
+            };
+            if (worker.Id == 0)
+                __Workers.Add(worker);
+            else
+                __Workers[__Workers.IndexOf(__Workers.FirstOrDefault(w => w.Id == worker.Id))] = worker;
+
+            return RedirectToAction("Index");
         }
     }
 }

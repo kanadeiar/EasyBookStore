@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\Data\" />
     <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\images\books\" />
   </ItemGroup>
