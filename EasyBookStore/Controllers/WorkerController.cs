@@ -4,22 +4,37 @@ using System.Linq;
 using EasyBookStore.Models;
 using EasyBookStore.WebModels;
 using EasyBookStore.Models.Data;
+using EasyBookStore.Interfaces.Services;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace EasyBookStore.Controllers
 {
+    [Route("Worker/[action]/{id?}")]
     public class WorkerController : Controller
     {
-        private static readonly IList<Worker> __Workers = StaticData.GetWorkers;
-        public IActionResult Index()
+        private readonly IWorkerData _workerData;
+        private readonly ILogger<WorkerController> _logger;
+
+        public WorkerController(IWorkerData workerData, ILogger<WorkerController> logger)
         {
-            return View(__Workers);
+            _workerData = workerData;
+            _logger = logger;
+        }   
+
+        [Route("~/workers")]
+        public async Task<IActionResult> Index()
+        {
+            var workers = await _workerData.GetAll();
+            return View(workers);
         }
 
-        public IActionResult Details(int id)
+        [Route("~/worker/info-{id}")]
+        public async Task<IActionResult> Details(int id)
         {
             if (id < 0) return BadRequest();
 
-            var worker = __Workers.FirstOrDefault(w => w.Id == id);
+            var worker = await _workerData.Get(id);
 
             if (worker is null) return NotFound();
 
@@ -35,11 +50,11 @@ namespace EasyBookStore.Controllers
             return View(workerWebModel);
         }
 
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id is null) return View(new WorkerEditWebModel());
 
-            var worker = __Workers.FirstOrDefault(w => w.Id == id);
+            var worker = await _workerData.Get((int)id);
             if (worker is null) return NotFound();
 
             var model = new WorkerEditWebModel
@@ -55,7 +70,7 @@ namespace EasyBookStore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(WorkerEditWebModel model)
+        public async Task<IActionResult> Edit(WorkerEditWebModel model)
         {
             var worker = new Worker
             {
@@ -66,18 +81,18 @@ namespace EasyBookStore.Controllers
                 Age = model.Age,
             };
             if (worker.Id == 0)
-                __Workers.Add(worker);
+                await _workerData.Add(worker);
             else
-                __Workers[__Workers.IndexOf(__Workers.FirstOrDefault(w => w.Id == worker.Id))] = worker;
+                await _workerData.Update(worker);
 
             return RedirectToAction("Index");
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0) return BadRequest();
 
-            var worker = __Workers.FirstOrDefault(w => w.Id == id);
+            var worker = await _workerData.Get(id);
             if (worker is null) return NotFound();
 
             var model = new WorkerEditWebModel
@@ -93,11 +108,11 @@ namespace EasyBookStore.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (id <= 0) return BadRequest();
 
-            __Workers.RemoveAt(__Workers.IndexOf(__Workers.FirstOrDefault(w => w.Id == id)));
+            await _workerData.Delete(id);
 
             return RedirectToAction("Index");
         }

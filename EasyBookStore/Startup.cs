@@ -1,4 +1,6 @@
-using EasyBookStore.Infrestructure.Middleware;
+using EasyBookStore.Infrastructure.Middleware;
+using EasyBookStore.Interfaces.Services;
+using EasyBookStore.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +18,8 @@ namespace EasyBookStore
         }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IWorkerData, InMemoryWorkerData>();
+
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
         }

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace EasyBookStore.Infrestructure.Middleware
+namespace EasyBookStore.Infrastructure.Middleware
 {
     public class DebugMiddleware
     {
