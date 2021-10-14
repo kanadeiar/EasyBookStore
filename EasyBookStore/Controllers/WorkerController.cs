@@ -10,7 +10,7 @@ namespace EasyBookStore.Controllers
     [Route("Worker/[action]/{id?}")]
     public class WorkerController : Controller
     {
-        private static readonly IList<Worker> __Workers = StaticData.GetWorkers;
+        
 
         [Route("~/workers")]
         public IActionResult Index()
