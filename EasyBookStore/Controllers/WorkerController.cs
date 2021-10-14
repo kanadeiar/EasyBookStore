@@ -7,14 +7,18 @@ using EasyBookStore.Models.Data;
 
 namespace EasyBookStore.Controllers
 {
+    [Route("Worker/[action]/{id?}")]
     public class WorkerController : Controller
     {
         private static readonly IList<Worker> __Workers = StaticData.GetWorkers;
+
+        [Route("~/workers")]
         public IActionResult Index()
         {
             return View(__Workers);
         }
 
+        [Route("~/worker/info-{id}")]
         public IActionResult Details(int id)
         {
             if (id < 0) return BadRequest();
