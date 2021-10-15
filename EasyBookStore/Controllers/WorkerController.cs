@@ -75,6 +75,15 @@ namespace EasyBookStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(WorkerEditWebModel model)
         {
+            if (model is null)
+                return BadRequest();
+            if (model.FirstName == "Ленин")
+                ModelState.AddModelError(nameof(model.FirstName), "Запрещено иметь имя \"Ленин\"");
+            if (model.LastName == "Ленинов" && model.FirstName == "Ленин" && model.Patronymic == "Ленинович")
+                ModelState.AddModelError(string.Empty, "Нельзя иметь фамилию имя и отчество \"Иванов Иван Иванович\"");
+            if (!ModelState.IsValid)
+                return View(model);
+
             var worker = new Worker
             {
                 Id = model.Id,
