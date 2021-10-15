@@ -46,8 +46,12 @@ namespace EasyBookStore.Controllers
                 Patronymic = worker.Patronymic,
                 Age = worker.Age,
             };
-
             return View(workerWebModel);
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            return View("Edit", new WorkerEditWebModel());
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -65,7 +69,6 @@ namespace EasyBookStore.Controllers
                 Patronymic = worker.Patronymic,
                 Age = worker.Age,
             };
-
             return View(model);
         }
 
@@ -84,7 +87,6 @@ namespace EasyBookStore.Controllers
                 await _workerData.Add(worker);
             else
                 await _workerData.Update(worker);
-
             return RedirectToAction("Index");
         }
 
@@ -103,7 +105,6 @@ namespace EasyBookStore.Controllers
                 Patronymic = worker.Patronymic,
                 Age = worker.Age,
             };
-
             return View(model);
         }
 
@@ -111,9 +112,7 @@ namespace EasyBookStore.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (id <= 0) return BadRequest();
-
             await _workerData.Delete(id);
-
             return RedirectToAction("Index");
         }
     }

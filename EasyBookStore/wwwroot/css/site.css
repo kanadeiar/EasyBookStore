@@ -9,11 +9,11 @@ html {
 body {
     overflow-y: scroll;
     margin-bottom: 80px;
-    background: #9dffd5;
+    background: #bffff7;
 }
 
 .card {
-    background: #c5ffe6;
+    background: #9fffdf;
 }
 
 .footer {
