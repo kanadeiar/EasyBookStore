@@ -5,6 +5,6 @@ namespace EasyBookStore.Domain.Models.Base
     /// <summary> Базовая сущность </summary>
     public abstract class Entity : IEntity
     {
-        public int Id { get; }
+        public int Id { get; set; }
     }
 }
