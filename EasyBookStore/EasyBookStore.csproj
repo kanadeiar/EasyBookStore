@@ -16,4 +16,8 @@
     <Folder Include="wwwroot\images\books\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EasyBookStore.Domain\EasyBookStore.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
