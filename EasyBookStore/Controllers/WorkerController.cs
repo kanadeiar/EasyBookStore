@@ -7,6 +7,7 @@ using EasyBookStore.Models.Data;
 using EasyBookStore.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using EasyBookStore.Domain.Models;
 
 namespace EasyBookStore.Controllers
 {

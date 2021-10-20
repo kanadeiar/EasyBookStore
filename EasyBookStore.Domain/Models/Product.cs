@@ -6,7 +6,7 @@ namespace EasyBookStore.Domain.Models
     /// <summary> Товар - книга </summary>
     public class Product : NamedEntity, IOrderedEntity
     {
-        public int Order { get; }
+        public int Order { get; set; }
         /// <summary> Жанр </summary>
         public int GenreId { get; set; }
         /// <summary> Автор </summary>
