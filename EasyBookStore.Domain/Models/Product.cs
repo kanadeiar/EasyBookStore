@@ -15,5 +15,7 @@ namespace EasyBookStore.Domain.Models
         public string ImageUrl { get; set; }
         /// <summary> Стоимость книги </summary>
         public decimal Price { get; set; }
+        /// <summary> Краткое сообщение о книге </summary>
+        public string Message { get; set; }
     }
 }

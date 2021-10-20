@@ -1,0 +1,18 @@
+﻿@model CatalogWebModel
+@{
+    ViewBag.Title = "Каталог товаров";
+}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-3">
+            <partial name="Partial/_LeftSidebarPartial" />
+        </div>
+        <div class="col-sm-9">
+            <partial name="Partial/_Products" model="Model.Products"/>
+        </div>
+    </div>
+
+</div>
+
