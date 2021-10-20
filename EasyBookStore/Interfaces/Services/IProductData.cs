@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using EasyBookStore.Domain.Common;
 using EasyBookStore.Domain.Models;
 
 namespace EasyBookStore.Interfaces.Services
@@ -12,5 +10,7 @@ namespace EasyBookStore.Interfaces.Services
         IEnumerable<Genre> GetGenres();
         /// <summary> Получить авторов книг </summary>
         IEnumerable<Author> GetAuthors();
+        /// <summary> Получить товары-книги </summary>
+        public IEnumerable<Product> GetProducts(ProductFilter filter = null);
     }
 }

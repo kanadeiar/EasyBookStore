@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using EasyBookStore.Domain.Common;
 using EasyBookStore.Domain.Models;
 using EasyBookStore.Interfaces.Services;
 using EasyBookStore.Models.Data;
@@ -20,5 +19,19 @@ namespace EasyBookStore.Services
         {
             return StaticData.Authors;
         }
+
+        public IEnumerable<Product> GetProducts(ProductFilter filter = null)
+        {
+            IEnumerable<Product> query = StaticData.Products;
+
+            if (filter?.GenreId is { } genre)
+                query = query.Where(p => p.GenreId == genre);
+
+            if (filter?.AuthorId is { } author)
+                query = query.Where(p => p.AuthorId == author);
+
+            return query;
+        }
+
     }
 }
