@@ -19,6 +19,7 @@ namespace EasyBookStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IWorkerData, InMemoryWorkerData>();
+            services.AddSingleton<IProductData, InMemoryProductData>();
 
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
