@@ -15,7 +15,7 @@
                         @foreach (var kind in parent.Child)
                         {
                             <li>
-                                <a class="nav-link text-dark fw-light pb-0" href="#">
+                                <a asp-controller="Catalog" asp-action="Index" asp-route-GenreId="@kind.Id" class="nav-link text-dark fw-light pb-0">
                                     @kind.Name
                                 </a>
                             </li>
@@ -27,7 +27,7 @@
         else
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" href="#">
+                <a asp-controller="Catalog" asp-action="Index" asp-route-GenreId="@parent.Id" class="nav-link text-dark">
                     @parent.Name
                 </a>
             </li>

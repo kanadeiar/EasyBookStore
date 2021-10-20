@@ -4,8 +4,8 @@
     @foreach (var author in Model)
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" aria-current="page" href="#">
-                @author.Name
+            <a asp-controller="Catalog" asp-action="Index" asp-route-AuthorId="@author.Id" class="nav-link text-dark" aria-current="page">
+                <span class="float-end">(50)</span>@author.Name
             </a>
         </li>
     }
