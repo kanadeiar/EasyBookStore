@@ -71,11 +71,11 @@ namespace EasyBookStore.Models.Data
         public static List<Product> Products { get; } = new()
         {
             new Product { Id = 1, Name = "Гарри поттер 1", Price = 500, ImageUrl = "harrypotter1.png", Message = "Книга о Гарри поттере первая из всего цикла рассказывает о фантастике.", Order = 0, AuthorId = 1, GenreId = 3 },
-            new Product { Id = 2, Name = "Гарри поттер 2", Price = 450, ImageUrl = "harrypotter1.png", Message = "Книга о Гарри поттере первая из всего цикла рассказывает о фантастике.", Order = 1, AuthorId = 1, GenreId = 3 },
-            new Product { Id = 3, Name = "Гарри поттер 3", Price = 800, ImageUrl = "harrypotter1.png", Message = "Книга о Гарри поттере первая из всего цикла рассказывает о фантастике.", Order = 2, AuthorId = 1, GenreId = 4 },
-            new Product { Id = 4, Name = "Властелин колец 1", Price = 600, ImageUrl = "harrypotter1.png", Message = "Книга о Гарри поттере первая из всего цикла рассказывает о фантастике.", Order = 3, AuthorId = 2, GenreId = 4 },
-            new Product { Id = 5, Name = "Властелин колец 2", Price = 790, ImageUrl = "harrypotter1.png", Message = "Книга о Гарри поттере первая из всего цикла рассказывает о фантастике.", Order = 4, AuthorId = 2, GenreId = 5 },
-            new Product { Id = 6, Name = "Властелин колец 3", Price = 400, ImageUrl = "harrypotter1.png", Message = "Книга о Гарри поттере первая из всего цикла рассказывает о фантастике.", Order = 5, AuthorId = 2, GenreId = 6 },
+            new Product { Id = 2, Name = "Гарри поттер 2", Price = 450, ImageUrl = "harrypotter2.png", Message = "Продолжение похождений Гарри Поттера по фантастическим местам.", Order = 1, AuthorId = 1, GenreId = 3 },
+            new Product { Id = 3, Name = "Гарри поттер 3", Price = 800, ImageUrl = "harrypotter3.png", Message = "Заключительная часть цикла Гарии Поттера рассказывает о его победах.", Order = 2, AuthorId = 1, GenreId = 4 },
+            new Product { Id = 4, Name = "Властелин колец 1", Price = 600, ImageUrl = "lordofrings1.png", Message = "Первая замечательная книга о похождения хранителя колец и его спутников.", Order = 3, AuthorId = 2, GenreId = 4 },
+            new Product { Id = 5, Name = "Властелин колец 2", Price = 790, ImageUrl = "lordofrings2.png", Message = "Продолжение похождения хранителей колец и их врагов по Средиземью.", Order = 4, AuthorId = 2, GenreId = 5 },
+            new Product { Id = 6, Name = "Властелин колец 3", Price = 400, ImageUrl = "lordofrings3.png", Message = "Продолжение похождений геров хранителей колец по Средиземью и окрестностям.", Order = 5, AuthorId = 2, GenreId = 6 },
             new Product { Id = 7, Name = "Путешествие по миру", Price = 510, ImageUrl = "harrypotter1.png", Message = "Книга о Гарри поттере первая из всего цикла рассказывает о фантастике.", Order = 6, AuthorId = 3, GenreId = 10 },
             new Product { Id = 8, Name = "Гении и трусы", Price = 400, ImageUrl = "harrypotter1.png", Message = "Книга о Гарри поттере первая из всего цикла рассказывает о фантастике.", Order = 7, AuthorId = 1, GenreId = 7 },
             new Product { Id = 9, Name = "Синяя книга", Price = 790, ImageUrl = "harrypotter1.png", Message = "Книга о Гарри поттере первая из всего цикла рассказывает о фантастике.", Order = 8, AuthorId = 4, GenreId = 8 },
