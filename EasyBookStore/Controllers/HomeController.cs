@@ -61,5 +61,15 @@ namespace EasyBookStore.Controllers
         {
             return View();
         }
+
+        public IActionResult Error(string id)
+        {
+            switch (id)
+            {
+                default: return Content($"Status --- {id}");
+                case "404": return View("Error404");
+            }
+            
+        }
     }
 }

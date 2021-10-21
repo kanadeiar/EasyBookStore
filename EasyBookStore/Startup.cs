@@ -32,6 +32,8 @@ namespace EasyBookStore
                 app.UseBrowserLink();
             }
 
+            app.UseStatusCodePagesWithRedirects("~/home/error/{0}");
+
             app.UseStaticFiles();
 
             app.UseRouting();
