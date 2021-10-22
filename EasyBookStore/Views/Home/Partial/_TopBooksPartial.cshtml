@@ -1,45 +1,25 @@
-﻿<div class="top_items row">
+﻿@model IEnumerable<ProductWebModel>
+
+<div class="top_items row">
     <h2 class="text-center display-6">Популярные книги</h2>
-
-    <div class="col-sm-6 col-md-4">
-        <div class="card">
-            <a href="#"><img src="~/images/books/harrypotter1.png" class="card-img-top" alt="Гарри поттер 1"></a>
-            <div class="card-body">
-                <h5 class="card-title">Гарри поттер номер 1</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Фантастика</h6>
-                <p class="card-text">Книга о Гарри поттере первая из всего цикла рассказывает о фантастике.</p>
-                <a href="#" class="btn btn-outline-success">Купить</a>
-                <a href="#" class="btn btn-outline-info">Подробности</a>
+    
+    @foreach (var product in Model)
+    {
+        <div class="col-sm-6 col-md-4">
+            <div class="card shadow">
+                <a href="#"><img src="~/images/books/@product.ImageUrl" class="card-img-top" alt="@product.Name"></a>
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@product.Genre</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Автор: <strong>@product.Author</strong></h6>
+                    <p class="card-text">@product.Message</p>
+                    <p class="card-text">Цена: @product.Price.ToString("C") </p>
+                    <a href="#" class="btn btn-outline-success">Купить</a>
+                    <a href="#" class="btn btn-outline-info">Подробности</a>
+                </div>
+                <div class="card-footer">Самое популярное</div>
             </div>
-            <div class="card-footer">Самое популярное</div>
         </div>
-    </div>
+    }
 
-    <div class="col-sm-6 col-md-4">
-        <div class="card">
-            <a href="#"><img src="~/images/books/harrypotter1.png" class="card-img-top" alt="Гарри поттер 1"></a>
-            <div class="card-body">
-                <h5 class="card-title">Гарри поттер номер 1</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Фантастика</h6>
-                <p class="card-text">Книга о Гарри поттере первая из всего цикла рассказывает о фантастике.</p>
-                <a href="#" class="btn btn-outline-success">Купить</a>
-                <a href="#" class="btn btn-outline-info">Подробности</a>
-            </div>
-            <div class="card-footer">Самое популярное</div>
-        </div>
-    </div>
-
-    <div class="col-sm-6 col-md-4">
-        <div class="card">
-            <a href="#"><img src="~/images/books/harrypotter1.png" class="card-img-top" alt="Гарри поттер 1"></a>
-            <div class="card-body">
-                <h5 class="card-title">Гарри поттер номер 1</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Фантастика</h6>
-                <p class="card-text">Книга о Гарри поттере первая из всего цикла рассказывает о фантастике.</p>
-                <a href="#" class="btn btn-outline-success">Купить</a>
-                <a href="#" class="btn btn-outline-info">Подробности</a>
-            </div>
-            <div class="card-footer">Самое популярное</div>
-        </div>
-    </div>
 </div>

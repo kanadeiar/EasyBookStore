@@ -1,4 +1,6 @@
-﻿<div class="top_items">
+﻿@model IEnumerable<ProductWebModel>
+
+<div class="top_items">
     <h2 class="text-center display-6">Рекомендуемые книги</h2>
 
     <div id="recommended-item-carousel" class="carousel slide" data-bs-ride="carousel">
@@ -6,98 +8,38 @@
             <div class="carousel-item active">
 
                 <div class="top-items row">
-                    <div class="col-sm-3">
-                        <div class="card">
-                            <a href="#"><img src="~/images/books/harrypotter1.png" class="card-img-top" alt="Гарри поттер 1"></a>
-                            <div class="card-body">
-                                <h5 class="card-title">Гарри поттер номер 1</h5>
-                                <a href="#" class="btn btn-outline-info">Подробности</a>
+                    @foreach (var product in Model.Take(4))
+                    {
+                        <div class="col-sm-3">
+                            <div class="card shadow">
+                                <a href="#"><img src="~/images/books/@product.ImageUrl" class="card-img-top" alt="@product.Name"></a>
+                                <div class="card-body">
+                                    <h5 class="card-title">@product.Name</h5>
+                                    <a href="#" class="btn btn-outline-info">Подробности</a>
+                                </div>
+                                <div class="card-footer">Рекомендация</div>
                             </div>
-                            <div class="card-footer">Рекомендация</div>
                         </div>
-                    </div>
-
-                    <div class="col-sm-3">
-                        <div class="card">
-                            <a href="#"><img src="~/images/books/harrypotter1.png" class="card-img-top" alt="Гарри поттер 1"></a>
-                            <div class="card-body">
-                                <h5 class="card-title">Гарри поттер номер 1</h5>
-                                <a href="#" class="btn btn-outline-info">Подробности</a>
-                            </div>
-                            <div class="card-footer">Рекомендация</div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3">
-                        <div class="card">
-                            <a href="#"><img src="~/images/books/harrypotter1.png" class="card-img-top" alt="Гарри поттер 1"></a>
-                            <div class="card-body">
-                                <h5 class="card-title">Гарри поттер номер 1</h5>
-                                <a href="#" class="btn btn-outline-info">Подробности</a>
-                            </div>
-                            <div class="card-footer">Рекомендация</div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3">
-                        <div class="card">
-                            <a href="#"><img src="~/images/books/harrypotter1.png" class="card-img-top" alt="Гарри поттер 1"></a>
-                            <div class="card-body">
-                                <h5 class="card-title">Гарри поттер номер 1</h5>
-                                <a href="#" class="btn btn-outline-info">Подробности</a>
-                            </div>
-                            <div class="card-footer">Рекомендация</div>
-                        </div>
-                    </div>
+                    }
                 </div>
 
             </div>
             <div class="carousel-item">
 
                 <div class="top-items row">
-                    <div class="col-sm-3">
-                        <div class="card">
-                            <a href="#"><img src="~/images/books/harrypotter1.png" class="card-img-top" alt="Гарри поттер 1"></a>
-                            <div class="card-body">
-                                <h5 class="card-title">Гарри поттер номер 1</h5>
-                                <a href="#" class="btn btn-outline-info">Подробности</a>
+                    @foreach (var product in Model.Skip(4).Take(4))
+                    {
+                        <div class="col-sm-3">
+                            <div class="card shadow">
+                                <a href="#"><img src="~/images/books/@product.ImageUrl" class="card-img-top" alt="@product.Name"></a>
+                                <div class="card-body">
+                                    <h5 class="card-title">@product.Name</h5>
+                                    <a href="#" class="btn btn-outline-info">Подробности</a>
+                                </div>
+                                <div class="card-footer">Рекомендация</div>
                             </div>
-                            <div class="card-footer">Рекомендация</div>
                         </div>
-                    </div>
-
-                    <div class="col-sm-3">
-                        <div class="card">
-                            <a href="#"><img src="~/images/books/harrypotter1.png" class="card-img-top" alt="Гарри поттер 1"></a>
-                            <div class="card-body">
-                                <h5 class="card-title">Гарри поттер номер 1</h5>
-                                <a href="#" class="btn btn-outline-info">Подробности</a>
-                            </div>
-                            <div class="card-footer">Рекомендация</div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3">
-                        <div class="card">
-                            <a href="#"><img src="~/images/books/harrypotter1.png" class="card-img-top" alt="Гарри поттер 1"></a>
-                            <div class="card-body">
-                                <h5 class="card-title">Гарри поттер номер 1</h5>
-                                <a href="#" class="btn btn-outline-info">Подробности</a>
-                            </div>
-                            <div class="card-footer">Рекомендация</div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3">
-                        <div class="card">
-                            <a href="#"><img src="~/images/books/harrypotter1.png" class="card-img-top" alt="Гарри поттер 1"></a>
-                            <div class="card-body">
-                                <h5 class="card-title">Гарри поттер номер 1</h5>
-                                <a href="#" class="btn btn-outline-info">Подробности</a>
-                            </div>
-                            <div class="card-footer">Рекомендация</div>
-                        </div>
-                    </div>
+                    }
                 </div>
 
             </div>

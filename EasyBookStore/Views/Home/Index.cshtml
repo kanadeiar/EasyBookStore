@@ -1,4 +1,5 @@
-﻿@{ 
+﻿@model IEnumerable<ProductWebModel>
+@{ 
     ViewBag.Title = "Главная страница";
 }
 
@@ -11,16 +12,10 @@
             <partial name="Partial/_LeftSidebarPartial"/>
         </div>
         <div class="col-sm-9">
-
-            <partial name="Partial/_TopBooksPartial"/>
-
-            <partial name="Partial/_NewBooksPartial"/>
-
-            <partial name="Partial/_RecommendedBooksPartial"/>
-
+            <partial name="Partial/_TopBooksPartial" model="Model"/>
+            <partial name="Partial/_NewBooksPartial" model="ViewBag.NewBooks"/>
+            <partial name="Partial/_RecommendedBooksPartial" model="ViewBag.RecommendedBooks"/>
         </div>
     </div>
-
-    
 
 </div>

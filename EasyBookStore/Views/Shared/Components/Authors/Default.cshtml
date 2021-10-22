@@ -1,0 +1,12 @@
+﻿@model IEnumerable<AuthorWebModel>
+
+<ul class="nav nav-pills flex-column">
+    @foreach (var author in Model)
+    {
+        <li class="nav-item">
+            <a asp-controller="Catalog" asp-action="Index" asp-route-AuthorId="@author.Id" class="nav-link text-dark" aria-current="page">
+                <span class="float-end">(50)</span>@author.Name
+            </a>
+        </li>
+    }
+</ul>

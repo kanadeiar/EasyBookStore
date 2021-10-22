@@ -19,6 +19,7 @@ namespace EasyBookStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IWorkerData, InMemoryWorkerData>();
+            services.AddSingleton<IProductData, InMemoryProductData>();
 
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
@@ -28,7 +29,10 @@ namespace EasyBookStore
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
             }
+
+            app.UseStatusCodePagesWithRedirects("~/home/error/{0}");
 
             app.UseStaticFiles();
 
