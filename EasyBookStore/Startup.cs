@@ -1,4 +1,5 @@
 using EasyBookStore.Dal;
+using EasyBookStore.Data;
 using EasyBookStore.Infrastructure.Middleware;
 using EasyBookStore.Interfaces.Services;
 using EasyBookStore.Services;
@@ -21,7 +22,9 @@ namespace EasyBookStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BookStoreContext>(options => 
-                options.UseSqlServer(Configuration.GetConnectionString("SqlServer"), o => o.EnableRetryOnFailure()));
+                options.UseSqlServer(Configuration.GetConnectionString("SqlServer")/*, o => o.EnableRetryOnFailure()*/));
+
+            services.AddTransient<EasyBookStoreDbInitializer>();
 
             services.AddSingleton<IWorkerData, InMemoryWorkerData>();
             services.AddSingleton<IProductData, InMemoryProductData>();
