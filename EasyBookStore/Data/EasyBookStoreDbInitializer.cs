@@ -33,8 +33,16 @@ namespace EasyBookStore.Data
                 await _context.Database.MigrateAsync();
             }
 
-
             await InitProductsAsync();
+        }
+
+        /// <summary> Пересоздание базы данных </summary>
+        public EasyBookStoreDbInitializer RecreateDatabase()
+        {
+            _logger.LogInformation("Recreate database ...");
+            _context.Database.EnsureDeleted();
+            _context.Database.Migrate();
+            return this;
         }
 
         private async Task InitProductsAsync()

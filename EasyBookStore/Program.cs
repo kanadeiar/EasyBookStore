@@ -16,7 +16,7 @@ namespace EasyBookStore
             using (var scope = host.Services.CreateScope())
             {
                 var initializer = scope.ServiceProvider.GetRequiredService<EasyBookStoreDbInitializer>();
-                await initializer.InitAsync();
+                await initializer/*.RecreateDatabase()*/.InitAsync();
             }
 
             await host.RunAsync();
