@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EasyBookStore.Domain.Models;
 
-namespace EasyBookStore.Services
+namespace EasyBookStore.Services.Memory
 {
     public class InMemoryWorkerData : IWorkerData
     {

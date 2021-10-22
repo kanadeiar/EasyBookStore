@@ -2,7 +2,7 @@ using EasyBookStore.Dal;
 using EasyBookStore.Data;
 using EasyBookStore.Infrastructure.Middleware;
 using EasyBookStore.Interfaces.Services;
-using EasyBookStore.Services;
+using EasyBookStore.Services.Memory;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

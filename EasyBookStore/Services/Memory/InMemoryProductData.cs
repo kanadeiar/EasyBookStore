@@ -5,7 +5,7 @@ using EasyBookStore.Domain.Models;
 using EasyBookStore.Interfaces.Services;
 using EasyBookStore.Models.Data;
 
-namespace EasyBookStore.Services
+namespace EasyBookStore.Services.Memory
 {
     /// <summary> Сервис хранения данных по товарам в памяти </summary>
     public class InMemoryProductData : IProductData
