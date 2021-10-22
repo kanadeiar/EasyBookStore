@@ -18,14 +18,14 @@ namespace EasyBookStore.Controllers
         public IActionResult Index()
         {
             var products = _productData.GetProducts();
-            var authors = _productData.GetAuthors();
-            var genres = _productData.GetGenres();
+            var genresPool = _productData.GetGenres().ToDictionary(g => g.Id);
+            var authorsPool = _productData.GetAuthors().ToDictionary(a => a.Id);
 
             var model = products.Take(3).Select(p => new ProductWebModel
             {
                 Id = p.Id,
-                Author = authors.SingleOrDefault(a => a.Id == p.AuthorId)?.Name ?? "<Неизвестный>",
-                Genre = genres.SingleOrDefault(g => g.Id == p.GenreId)?.Name ?? "<Неизвестный>",
+                Genre = genresPool[p.GenreId]?.Name ?? "<Неизвестный>",
+                Author = authorsPool[p.AuthorId ?? 0]?.Name ?? "<Неизвестный>",                
                 Name = p.Name,
                 ImageUrl = p.ImageUrl,
                 Price = p.Price,
@@ -35,8 +35,8 @@ namespace EasyBookStore.Controllers
             ViewBag.NewBooks = products.Skip(3).Take(3).Select(p => new ProductWebModel
             {
                 Id = p.Id,
-                Author = authors.SingleOrDefault(a => a.Id == p.AuthorId)?.Name ?? "<Неизвестный>",
-                Genre = genres.SingleOrDefault(g => g.Id == p.GenreId)?.Name ?? "<Неизвестный>",
+                Genre = genresPool[p.GenreId]?.Name ?? "<Неизвестный>",
+                Author = authorsPool[p.AuthorId ?? 0]?.Name ?? "<Неизвестный>",
                 Name = p.Name,
                 ImageUrl = p.ImageUrl,
                 Price = p.Price,
@@ -46,8 +46,8 @@ namespace EasyBookStore.Controllers
             ViewBag.RecommendedBooks = products.Take(8).Select(p => new ProductWebModel
             {
                 Id = p.Id,
-                Author = authors.SingleOrDefault(a => a.Id == p.AuthorId)?.Name ?? "<Неизвестный>",
-                Genre = genres.SingleOrDefault(g => g.Id == p.GenreId)?.Name ?? "<Неизвестный>",
+                Genre = genresPool[p.GenreId]?.Name ?? "<Неизвестный>",
+                Author = authorsPool[p.AuthorId ?? 0]?.Name ?? "<Неизвестный>",
                 Name = p.Name,
                 ImageUrl = p.ImageUrl,
                 Price = p.Price,

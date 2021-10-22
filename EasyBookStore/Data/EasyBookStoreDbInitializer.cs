@@ -39,6 +39,12 @@ namespace EasyBookStore.Data
 
         private async Task InitProductsAsync()
         {
+            if (_context.Genres.Any())
+            {
+                _logger.LogInformation("Database contains test data - database init with test data is not required");
+                return;
+            }
+
             _logger.LogInformation("Writing genres of books ...");
             await using (await _context.Database.BeginTransactionAsync())
             {

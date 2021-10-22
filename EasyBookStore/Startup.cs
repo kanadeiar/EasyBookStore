@@ -2,6 +2,7 @@ using EasyBookStore.Dal;
 using EasyBookStore.Data;
 using EasyBookStore.Infrastructure.Middleware;
 using EasyBookStore.Interfaces.Services;
+using EasyBookStore.Services.Database;
 using EasyBookStore.Services.Memory;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,7 +28,8 @@ namespace EasyBookStore
             services.AddTransient<EasyBookStoreDbInitializer>();
 
             services.AddSingleton<IWorkerData, InMemoryWorkerData>();
-            services.AddSingleton<IProductData, InMemoryProductData>();
+            //services.AddSingleton<IProductData, InMemoryProductData>();
+            services.AddScoped<IProductData, DatabaseProductData>();
 
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();

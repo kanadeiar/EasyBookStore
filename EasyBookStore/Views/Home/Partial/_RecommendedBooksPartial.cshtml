@@ -10,7 +10,7 @@
                 <div class="top-items row">
                     @foreach (var product in Model.Take(4))
                     {
-                        <div class="col-sm-3">
+                        <div class="col-sm-6 col-md-3 mb-1">
                             <div class="card shadow">
                                 <a href="#"><img src="~/images/books/@product.ImageUrl" class="card-img-top" alt="@product.Name"></a>
                                 <div class="card-body">
@@ -29,7 +29,7 @@
                 <div class="top-items row">
                     @foreach (var product in Model.Skip(4).Take(4))
                     {
-                        <div class="col-sm-3">
+                        <div class="col-sm-6 col-md-3 mb-1">
                             <div class="card shadow">
                                 <a href="#"><img src="~/images/books/@product.ImageUrl" class="card-img-top" alt="@product.Name"></a>
                                 <div class="card-body">
