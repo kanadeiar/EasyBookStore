@@ -1,6 +1,7 @@
 ﻿using EasyBookStore.Dal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -47,42 +48,46 @@ namespace EasyBookStore.Data
 
         private async Task InitProductsAsync()
         {
+            var timer = Stopwatch.StartNew();
             if (_context.Genres.Any())
             {
                 _logger.LogInformation("Database contains test data - database init with test data is not required");
                 return;
             }
 
-            _logger.LogInformation("Writing genres of books ...");
+            var genresPool = TestData.Genres.ToDictionary(g => g.Id);
+            foreach (var child in TestData.Genres.Where(g => g.ParentId is { }))
+                child.Parent = genresPool[(int)child.ParentId!];
+            var authorsPool = TestData.Authors.ToDictionary(a => a.Id);
+
+            foreach (var product in TestData.Products)
+            {
+                product.Genre = genresPool[product.GenreId];
+                if (product.AuthorId is { } authorId)
+                    product.Author = authorsPool[authorId];
+                product.Id = 0;
+                product.GenreId = 0;
+                product.AuthorId = null;
+            }
+            foreach (var genre in TestData.Genres)
+            {
+                genre.Id = 0;
+                genre.ParentId = null;
+            }
+            foreach (var author in TestData.Authors)
+                author.Id = 0;
+
+            _logger.LogInformation("Writing init data of catalog goods ...");
             await using (await _context.Database.BeginTransactionAsync())
             {
                 _context.Genres.AddRange(TestData.Genres);
-
-                await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Genres] ON");
-                await _context.SaveChangesAsync();
-                await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Genres] OFF");
-                await _context.Database.CommitTransactionAsync();
-            }
-            _logger.LogInformation("Writing authors of books ...");
-            await using (await _context.Database.BeginTransactionAsync())
-            {
                 _context.Authors.AddRange(TestData.Authors);
-
-                await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Authors] ON");
-                await _context.SaveChangesAsync();
-                await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Authors] OFF");
-                await _context.Database.CommitTransactionAsync();
-            }
-            _logger.LogInformation("Writing goods books ...");
-            await using (await _context.Database.BeginTransactionAsync())
-            {
                 _context.Products.AddRange(TestData.Products);
 
-                await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Products] ON");
                 await _context.SaveChangesAsync();
-                await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Products] OFF");
                 await _context.Database.CommitTransactionAsync();
             }
+            _logger.LogInformation("Complete writing init data of catalog goods");
         }
 
     }

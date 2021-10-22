@@ -61,7 +61,7 @@ namespace EasyBookStore.Data
             new Genre { Id = 19, Name = "Кулинария", Order = 39, ParentId = 16 },
             new Genre { Id = 20, Name = "Самоучители", Order = 37, ParentId = 16 },
 
-            new Genre { Id = 21, Name = "Учебники", Order = 30 },
+            new Genre { Id = 21, Name = "Учебники", Order = 38 },
             new Genre { Id = 22, Name = "Комиксы", Order = 36 },
             new Genre { Id = 23, Name = "Огород", Order = 32 },
             new Genre { Id = 24, Name = "Иностранное", Order = 31 },
