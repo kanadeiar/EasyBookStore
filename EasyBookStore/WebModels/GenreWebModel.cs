@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace EasyBookStore.WebModels
 {
@@ -12,5 +9,6 @@ namespace EasyBookStore.WebModels
         public int Order { get; set; }
         public GenreWebModel Parent { get; set; }
         public List<GenreWebModel> Child { get; set; } = new();
+        public int CountProducts { get; set; }
     }
 }

@@ -8,10 +8,13 @@ using EasyBookStore.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using EasyBookStore.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
+using EasyBookStore.Domain.Models.Identity;
 
 namespace EasyBookStore.Controllers
 {
     [Route("Worker/[action]/{id?}")]
+    [Authorize]
     public class WorkerController : Controller
     {
         private readonly IWorkerData _workerData;
@@ -48,11 +51,13 @@ namespace EasyBookStore.Controllers
             return View(workerWebModel);
         }
 
+        [Authorize(Roles = Role.Administrators)]
         public async Task<IActionResult> Create()
         {
             return View("Edit", new WorkerEditWebModel());
         }
 
+        [Authorize(Roles = Role.Administrators)]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id is null) return View(new WorkerEditWebModel());
@@ -71,7 +76,7 @@ namespace EasyBookStore.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = Role.Administrators)]
         public async Task<IActionResult> Edit(WorkerEditWebModel model)
         {
             if (model is null)
@@ -98,6 +103,7 @@ namespace EasyBookStore.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = Role.Administrators)]
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0) return BadRequest();
@@ -116,7 +122,7 @@ namespace EasyBookStore.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = Role.Administrators)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (id <= 0) return BadRequest();
