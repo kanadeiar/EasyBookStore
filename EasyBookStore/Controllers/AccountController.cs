@@ -81,11 +81,11 @@ namespace EasyBookStore.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(string returnUrl)
         {
             _logger.LogError($"Выход пользователя из системы");
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return LocalRedirect(returnUrl ?? "/");
         }
 
         [AllowAnonymous]
