@@ -84,6 +84,9 @@ namespace EasyBookStore
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseMiddleware<DebugMiddleware>();
 
             app.UseEndpoints(endpoints =>
