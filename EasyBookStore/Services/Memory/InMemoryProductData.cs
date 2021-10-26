@@ -14,11 +14,12 @@ namespace EasyBookStore.Services.Memory
         {
             return StaticData.Genres;
         }
-
+        public IEnumerable<Genre> GetGenresWithProducts() => GetGenres();
         public IEnumerable<Author> GetAuthors()
         {
             return StaticData.Authors;
         }
+        public IEnumerable<Author> GetAuthorsWithProducts() => GetAuthors();
 
         public IEnumerable<Product> GetProducts(ProductFilter filter = null)
         {
@@ -32,6 +33,9 @@ namespace EasyBookStore.Services.Memory
 
             return query;
         }
+
+
+
 
     }
 }

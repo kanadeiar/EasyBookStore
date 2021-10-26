@@ -2,6 +2,7 @@
 using EasyBookStore.Domain.Common;
 using EasyBookStore.Domain.Models;
 using EasyBookStore.Interfaces.Services;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,10 +15,22 @@ namespace EasyBookStore.Services.Database
         {
             _context = context;
         }
-        public IEnumerable<Genre> GetGenres() => _context.Genres;
-        public IEnumerable<Author> GetAuthors() => _context.Authors;
-
-
+        public IEnumerable<Genre> GetGenres()
+        {
+            return _context.Genres;
+        }
+        public IEnumerable<Genre> GetGenresWithProducts()
+        {
+            return _context.Genres.Include(g => g.Products);
+        }
+        public IEnumerable<Author> GetAuthors()
+        {
+            return _context.Authors;
+        }
+        public IEnumerable<Author> GetAuthorsWithProducts()
+        {
+            return _context.Authors.Include(a => a.Products);
+        }
         public IEnumerable<Product> GetProducts(ProductFilter filter = null)
         {
             IQueryable<Product> query = _context.Products;
@@ -30,5 +43,9 @@ namespace EasyBookStore.Services.Database
 
             return query;
         }
+
+
+
+
     }
 }
