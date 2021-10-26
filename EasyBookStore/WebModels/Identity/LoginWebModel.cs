@@ -5,11 +5,11 @@ namespace EasyBookStore.WebModels.Identity
 {
     public class LoginWebModel
     {
-        [Required]
+        [Required(ErrorMessage = "Нужно обязательно ввести имя пользователя")]
         [Display(Name = "Имя пользователя")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Нужно обязательно ввести свой пароль")]
         [Display(Name = "Пароль")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
