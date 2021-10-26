@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Linq;
 using EasyBookStore.Domain.Common;
+using Microsoft.Extensions.Logging;
 
 namespace EasyBookStore.Controllers
 {
@@ -12,11 +13,13 @@ namespace EasyBookStore.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
         }
 
         public IActionResult Register()
@@ -38,6 +41,7 @@ namespace EasyBookStore.Controllers
             var registerResult = await _userManager.CreateAsync(user, model.Password);
             if (registerResult.Succeeded)
             {
+                _logger.LogInformation($"Пользователь {user.UserName} успешно зарегистрирован");
                 await _signInManager.SignInAsync(user, false);
                 return RedirectToAction("Index", "Home");
             }
@@ -45,6 +49,7 @@ namespace EasyBookStore.Controllers
             foreach (var error in errors)
                 ModelState.AddModelError("", error);
 
+            _logger.LogError($"Ошибки при регистрации пользователя {user.UserName} в систему: {string.Join(",", errors)}");
             return View(model);
         }
 
@@ -63,21 +68,25 @@ namespace EasyBookStore.Controllers
 
             if (loginResult.Succeeded)
             {
+                _logger.LogInformation($"Пользователь {model.UserName} успешно вошел в систему");
                 return LocalRedirect(model.ReturnUrl ?? "/");
             }
 
             ModelState.AddModelError("", "Ошибка ввода имени пользователя или пароля");
+            _logger.LogError($"Ошибка при входе пользователя {model.UserName}");
             return View(model);
         }
 
         public async Task<IActionResult> Logout()
         {
+            _logger.LogError($"Выход пользователя из системы");
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
         public IActionResult AccessDenied()
         {
+            _logger.LogError($"В доступе оказано");
             return View();
         }
     }
