@@ -1,4 +1,5 @@
 ﻿using EasyBookStore.Domain.Models.Identity;
+using EasyBookStore.WebModels.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,16 +18,25 @@ namespace EasyBookStore.Controllers
 
         public IActionResult Register()
         {
-            return View();
+            return View(new RegisterWebModel());
         }
+
+        [HttpPost]
+        public IActionResult Register(RegisterWebModel model)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
         public IActionResult Login()
         {
             return View();
         }
+
         public IActionResult Logout()
         {
             return RedirectToAction("Index", "Home");
         }
+
         public IActionResult AccessDenied()
         {
             return View();
