@@ -1,3 +1,4 @@
+using System;
 using EasyBookStore.Dal.Context;
 using EasyBookStore.Data;
 using EasyBookStore.Domain.Models.Identity;
@@ -12,7 +13,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 
 namespace EasyBookStore
 {
