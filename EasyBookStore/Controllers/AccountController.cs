@@ -2,6 +2,7 @@
 using EasyBookStore.WebModels.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace EasyBookStore.Controllers
 {
@@ -21,10 +22,27 @@ namespace EasyBookStore.Controllers
             return View(new RegisterWebModel());
         }
 
-        [HttpPost]
-        public IActionResult Register(RegisterWebModel model)
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterWebModel model)
         {
-            return RedirectToAction("Index", "Home");
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = new User
+            {
+                UserName = model.UserName,
+            };
+
+            var registerResult = await _userManager.CreateAsync(user, model.Password);
+            if (registerResult.Succeeded)
+            {
+                await _signInManager.SignInAsync(user, false);
+                return RedirectToAction("Index", "Home");
+            }
+            foreach (var error in registerResult.Errors)
+                ModelState.AddModelError("", error.Description);
+
+            return View(model);
         }
 
         public IActionResult Login()
