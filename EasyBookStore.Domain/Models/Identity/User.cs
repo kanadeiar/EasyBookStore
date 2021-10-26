@@ -5,6 +5,6 @@ namespace EasyBookStore.Domain.Models.Identity
     public class User : IdentityUser
     {
         public const string Administrator = "Admin";
-        public const string DefaultAdminPassword = "123AdminPassword";
+        public const string DefaultAdminPassword = "123";
     }
 }
