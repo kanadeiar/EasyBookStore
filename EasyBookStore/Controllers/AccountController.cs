@@ -50,6 +50,7 @@ namespace EasyBookStore.Controllers
             return View(new LoginWebModel { ReturnUrl = returnUrl });
         }
 
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginWebModel model)
         {
             if (!ModelState.IsValid)

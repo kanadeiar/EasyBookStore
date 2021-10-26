@@ -1,26 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EasyBookStore.WebModels.Identity
 {
     public class RegisterWebModel
     {
-        [Required]
+        [Required(ErrorMessage = "Нужно обязательно ввести имя пользователя")]
         [Display(Name = "Имя пользователя")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Нужно обязательно ввести свой пароль")]
         [Display(Name = "Пароль")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Нужно обязательно ввети подтверждение своего пароля")]
         [Display(Name = "Пароль")]
         [DataType(DataType.Password)]
-        [Compare(nameof(Password))]
+        [Compare(nameof(Password), ErrorMessage = "Пароли должны совпадать")]
         public string PasswordConfirm { get; set; } 
     }
 }

@@ -55,9 +55,9 @@ namespace EasyBookStore
                 o.Cookie.Name = "EasyBookStore";
                 //o.Cookie.HttpOnly = true;
                 o.ExpireTimeSpan = TimeSpan.FromDays(10);
-                o.LoginPath = "Account/Login";
-                o.LogoutPath = "Account/Logout";
-                o.AccessDeniedPath = "Account/AccessDenied";
+                o.LoginPath = "/Account/Login";
+                o.LogoutPath = "/Account/Logout";
+                o.AccessDeniedPath = "/Account/AccessDenied";
                 o.SlidingExpiration = true;
             });
 
