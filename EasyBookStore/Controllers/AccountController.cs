@@ -45,9 +45,25 @@ namespace EasyBookStore.Controllers
             return View(model);
         }
 
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl)
         {
-            return View();
+            return View(new LoginWebModel { ReturnUrl = returnUrl });
+        }
+
+        public async Task<IActionResult> Login(LoginWebModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var loginResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+
+            if (loginResult.Succeeded)
+            {
+                return LocalRedirect(model.ReturnUrl ?? "/");
+            }
+
+            ModelState.AddModelError("", "Ошибка ввода имени пользователя или пароля");
+            return View(model);
         }
 
         public async Task<IActionResult> Logout()
