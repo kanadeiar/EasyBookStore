@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using EasyBookStore.Interfaces.Services;
 using EasyBookStore.WebModels;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +16,7 @@ namespace EasyBookStore.Components
 
         public IViewComponentResult Invoke()
         {
-            var genres = _productData.GetGenres();
+            var genres = _productData.GetGenresWithProducts();
             var parents = genres.Where(g => g.ParentId is null);
 
             var parentsViews = parents.Select(p => new GenreWebModel
@@ -26,6 +24,7 @@ namespace EasyBookStore.Components
                 Id = p.Id,
                 Name = p.Name,
                 Order = p.Order,
+                CountProducts = p.Products.Count,
             }).ToList();
 
             foreach (var parent in parentsViews)
@@ -38,6 +37,7 @@ namespace EasyBookStore.Components
                         Name = kind.Name,
                         Order = kind.Order,
                         Parent = parent,
+                        CountProducts = kind.Products.Count,
                     });
                 parent.Child.Sort((a, b) => Comparer<int>.Default.Compare(a.Order, b.Order));
             }

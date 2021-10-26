@@ -5,7 +5,8 @@
     {
         <li class="nav-item">
             <a asp-controller="Catalog" asp-action="Index" asp-route-AuthorId="@author.Id" class="nav-link text-dark" aria-current="page">
-                <span class="float-end">(50)</span>@author.Name
+                <span class="float-end">(@author.CountProducts)</span>
+                @author.Name
             </a>
         </li>
     }

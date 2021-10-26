@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using EasyBookStore.Interfaces.Services;
 using EasyBookStore.WebModels;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +14,12 @@ namespace EasyBookStore.Components
         }
         public IViewComponentResult Invoke()
         {
-            var authors = _productData.GetAuthors().OrderBy(a => a.Order).Select(a => new AuthorWebModel
+            var authors = _productData.GetAuthorsWithProducts().OrderBy(a => a.Order).Select(a => new AuthorWebModel
             {
                 Id = a.Id,
                 Name = a.Name,
                 Order = a.Order,
+                CountProducts = a.Products.Count,
             });
 
             return View(authors);
