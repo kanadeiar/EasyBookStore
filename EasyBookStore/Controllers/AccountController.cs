@@ -3,6 +3,8 @@ using EasyBookStore.WebModels.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using System.Linq;
+using EasyBookStore.Domain.Common;
 
 namespace EasyBookStore.Controllers
 {
@@ -39,8 +41,9 @@ namespace EasyBookStore.Controllers
                 await _signInManager.SignInAsync(user, false);
                 return RedirectToAction("Index", "Home");
             }
-            foreach (var error in registerResult.Errors)
-                ModelState.AddModelError("", error.Description);
+            var errors = registerResult.Errors.Select(e => IdentityErrorCodes.GetDescription(e.Code));
+            foreach (var error in errors)
+                ModelState.AddModelError("", error);
 
             return View(model);
         }
