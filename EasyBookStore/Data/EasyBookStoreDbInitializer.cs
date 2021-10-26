@@ -1,4 +1,4 @@
-﻿using EasyBookStore.Dal;
+﻿using EasyBookStore.Dal.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;

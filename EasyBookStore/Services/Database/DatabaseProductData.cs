@@ -1,4 +1,4 @@
-﻿using EasyBookStore.Dal;
+﻿using EasyBookStore.Dal.Context;
 using EasyBookStore.Domain.Common;
 using EasyBookStore.Domain.Models;
 using EasyBookStore.Interfaces.Services;

@@ -1,4 +1,4 @@
-using EasyBookStore.Dal;
+using EasyBookStore.Dal.Context;
 using EasyBookStore.Data;
 using EasyBookStore.Infrastructure.Middleware;
 using EasyBookStore.Interfaces.Services;
