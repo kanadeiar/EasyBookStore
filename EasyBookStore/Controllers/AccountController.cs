@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using System.Linq;
 using EasyBookStore.Domain.Common;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EasyBookStore.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -22,12 +24,13 @@ namespace EasyBookStore.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View(new RegisterWebModel());
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, AllowAnonymous]
         public async Task<IActionResult> Register(RegisterWebModel model)
         {
             if (!ModelState.IsValid)
@@ -53,12 +56,13 @@ namespace EasyBookStore.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
         public IActionResult Login(string returnUrl)
         {
             return View(new LoginWebModel { ReturnUrl = returnUrl });
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, AllowAnonymous]
         public async Task<IActionResult> Login(LoginWebModel model)
         {
             if (!ModelState.IsValid)
@@ -84,6 +88,7 @@ namespace EasyBookStore.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [AllowAnonymous]
         public IActionResult AccessDenied()
         {
             _logger.LogError($"В доступе оказано");
