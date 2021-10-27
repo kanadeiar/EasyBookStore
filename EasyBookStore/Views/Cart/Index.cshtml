@@ -10,27 +10,29 @@
         </div>
         <div class="col-sm-9">
             <h2 class="text-center display-6">@ViewBag.Title</h2>
-            
-            <div class="table-responsive-sm">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Название</th>
-                        <th scope="col">Цена</th>
-                        <th scope="col">Количество</th>
-                        <th scope="col">Итого</th>
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
+
+            @if (Model.Items.Any())
+            {
+                <div class="table-responsive-sm">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Название</th>
+                            <th scope="col">Цена</th>
+                            <th scope="col">Количество</th>
+                            <th scope="col">Итого</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         @foreach (var (product, quantity, priceSum) in Model.Items)
                         {
                             <tr>
-                                <td><img src="~/images/books/@product.ImageUrl" alt="@product.Name" width="100"/></td>
+                                <td><img src="~/images/books/@product.ImageUrl" alt="@product.Name" width="100" /></td>
                                 <td>
                                     <h4>@product.Name</h4>
-                                    <p>Артикул: @product.Id.ToString("0000000")</p> 
+                                    <p>Артикул: @product.Id.ToString("0000000")</p>
                                 </td>
                                 <td>@product.Price.ToString("C")</td>
                                 <td>
@@ -46,9 +48,19 @@
                                 </td>
                             </tr>
                         }
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <a asp-controller="Cart" asp-action="Clear" class="btn btn-warning">Очистить корзину</a>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p>Ваша корзина с товарами пуста</p>
+            }
 
         </div>
     </div>
