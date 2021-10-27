@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using EasyBookStore.Domain.Common;
 using EasyBookStore.Interfaces.Services;
 using EasyBookStore.WebModels;
 using Microsoft.AspNetCore.Mvc;
@@ -17,42 +18,41 @@ namespace EasyBookStore.Controllers
         }
         public IActionResult Index()
         {
-            var products = _productData.GetProducts();
-            var genresPool = _productData.GetGenres().ToDictionary(g => g.Id);
-            var authorsPool = _productData.GetAuthors().ToDictionary(a => a.Id);
+            var model = _productData.GetProducts(new ProductFilter {Ids = new []{1, 2, 3}})
+                .Select(p => new ProductWebModel
+                {
+                    Id = p.Id,
+                    Genre = p.Genre.Name,
+                    Author = p.Author?.Name ?? "<Неизвестный>",                
+                    Name = p.Name,
+                    ImageUrl = p.ImageUrl,
+                    Price = p.Price,
+                    Message = p.Message,
+                });
 
-            var model = products.Take(3).Select(p => new ProductWebModel
-            {
-                Id = p.Id,
-                Genre = genresPool[p.GenreId]?.Name ?? "<Неизвестный>",
-                Author = authorsPool[p.AuthorId ?? 0]?.Name ?? "<Неизвестный>",                
-                Name = p.Name,
-                ImageUrl = p.ImageUrl,
-                Price = p.Price,
-                Message = p.Message,
-            });
+            ViewBag.NewBooks = _productData.GetProducts(new ProductFilter { Ids = new[] { 4, 5, 6 } })
+                .Select(p => new ProductWebModel
+                {
+                    Id = p.Id,
+                    Genre = p.Genre.Name,
+                    Author = p.Author?.Name ?? "<Неизвестный>",
+                    Name = p.Name,
+                    ImageUrl = p.ImageUrl,
+                    Price = p.Price,
+                    Message = p.Message,
+                });
 
-            ViewBag.NewBooks = products.Skip(3).Take(3).Select(p => new ProductWebModel
-            {
-                Id = p.Id,
-                Genre = genresPool[p.GenreId]?.Name ?? "<Неизвестный>",
-                Author = authorsPool[p.AuthorId ?? 0]?.Name ?? "<Неизвестный>",
-                Name = p.Name,
-                ImageUrl = p.ImageUrl,
-                Price = p.Price,
-                Message = p.Message,
-            });
-
-            ViewBag.RecommendedBooks = products.Take(8).Select(p => new ProductWebModel
-            {
-                Id = p.Id,
-                Genre = genresPool[p.GenreId]?.Name ?? "<Неизвестный>",
-                Author = authorsPool[p.AuthorId ?? 0]?.Name ?? "<Неизвестный>",
-                Name = p.Name,
-                ImageUrl = p.ImageUrl,
-                Price = p.Price,
-                Message = p.Message,
-            });
+            ViewBag.RecommendedBooks = _productData.GetProducts(new ProductFilter { Ids = new[] { 1, 2, 3, 4, 5, 6, 7, 8 } })
+                .Select(p => new ProductWebModel
+                {
+                    Id = p.Id,
+                    Genre = p.Genre.Name,
+                    Author = p.Author?.Name ?? "<Неизвестный>",
+                    Name = p.Name,
+                    ImageUrl = p.ImageUrl,
+                    Price = p.Price,
+                    Message = p.Message,
+                });
 
             return View(model);
         }

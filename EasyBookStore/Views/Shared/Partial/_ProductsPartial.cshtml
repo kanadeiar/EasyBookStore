@@ -7,14 +7,14 @@
     {
         <div class="col-sm-6 col-md-4 mb-3">
             <div class="card shadow">
-                <a href="#"><img src="~/images/books/@product.ImageUrl" class="card-img-top" alt="@product.Name"></a>
+                <a asp-controller="Catalog" asp-action="Details" asp-route-id="@product.Id"><img src="~/images/books/@product.ImageUrl" class="card-img-top" alt="@product.Name"></a>
                 <div class="card-body">
                     <h5 class="card-title">@product.Name</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Автор: <strong>@product.Author</strong></h6>
                     <h6 class="card-subtitle mb-2 text-muted"><strong>@product.Genre</strong> Цена: @product.Price.ToString("C")</h6>
                     <p class="card-text">@product.Message</p>
                     <a href="#" class="btn btn-outline-success">Купить</a>
-                    <a href="#" class="btn btn-outline-info">Подробности</a>
+                    <a asp-controller="Catalog" asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-info">Подробности</a>
                 </div>
             </div>
         </div>
