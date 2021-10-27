@@ -28,7 +28,7 @@
                         <p><b>Автор:</b> @Model.Author</p>
                         <span>
                             <span>Цена: @Model.Price.ToString("C")</span>
-                            <a class="btn btn-outline-success">
+                            <a class="btn btn-outline-success" asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id">
                                 <i class="fas fa-shopping-cart"></i>
                                 В корзину
                             </a>

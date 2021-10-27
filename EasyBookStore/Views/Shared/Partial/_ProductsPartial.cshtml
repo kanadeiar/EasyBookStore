@@ -13,7 +13,10 @@
                     <h6 class="card-subtitle mb-2 text-muted">Автор: <strong>@product.Author</strong></h6>
                     <h6 class="card-subtitle mb-2 text-muted"><strong>@product.Genre</strong> Цена: @product.Price.ToString("C")</h6>
                     <p class="card-text">@product.Message</p>
-                    <a href="#" class="btn btn-outline-success">Купить</a>
+                    <a asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" class="btn btn-outline-success">
+                        <i class="fas fa-shopping-cart"></i>
+                        В корзину
+                    </a>
                     <a asp-controller="Catalog" asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-info">Подробности</a>
                 </div>
             </div>

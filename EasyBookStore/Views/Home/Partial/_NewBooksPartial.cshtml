@@ -13,7 +13,7 @@
                     <h6 class="card-subtitle mb-2 text-muted">Автор: <strong>@product.Author</strong></h6>
                     <p class="card-text">Цена: @product.Price.ToString("C") </p>
                     <p class="card-text">@product.Message</p>
-                    <a href="#" class="btn btn-outline-success">
+                    <a asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" class="btn btn-outline-success">
                         <i class="fas fa-shopping-cart"></i>
                         В корзину
                     </a>
