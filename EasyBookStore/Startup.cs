@@ -4,6 +4,8 @@ using EasyBookStore.Data;
 using EasyBookStore.Domain.Models.Identity;
 using EasyBookStore.Infrastructure.Middleware;
 using EasyBookStore.Interfaces.Services;
+using EasyBookStore.Services;
+using EasyBookStore.Services.Cookies;
 using EasyBookStore.Services.Database;
 using EasyBookStore.Services.Memory;
 using Microsoft.AspNetCore.Builder;
@@ -62,6 +64,9 @@ namespace EasyBookStore
             });
 
             services.AddTransient<EasyBookStoreDbInitializer>();
+
+            services.AddScoped<ICartStore, CookiesCartStore>();
+            services.AddScoped<ICartService, CartService>();
 
             services.AddSingleton<IWorkerData, InMemoryWorkerData>();
             //services.AddSingleton<IProductData, InMemoryProductData>();
