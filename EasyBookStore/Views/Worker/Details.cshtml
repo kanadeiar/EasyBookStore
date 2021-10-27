@@ -1,6 +1,7 @@
-﻿@model WorkerDetailsWebModel
+﻿@using EasyBookStore.Domain.Models.Identity
+@model WorkerDetailsWebModel
 
-@{ 
+@{
     ViewBag.Title = "Детальные данные по сотруднику";
 }
 
@@ -27,8 +28,12 @@
         <dd class="col-sm-10">@Html.DisplayFor(model => model.Age) лет</dd>
     </dl>
 
-    <div>
-        <a class="btn btn-outline-dark" asp-action="Edit" asp-route-id="@Model.Id">Редактировать</a>
-        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@Model.Id">Удалить</a>
-    </div>
+    @if (User.IsInRole(Role.Administrators))
+    {
+        <div>
+            <a class="btn btn-outline-dark m-1" asp-action="Edit" asp-route-id="@Model.Id">Редактировать сотрудника</a>
+            <a class="btn btn-outline-danger m-1" asp-action="Delete" asp-route-id="@Model.Id">Удалить сотрудника</a>
+        </div>
+    }
+
 </div>

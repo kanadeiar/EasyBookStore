@@ -1,0 +1,80 @@
+﻿@model IEnumerable<GenreWebModel>
+
+@*<ul class="nav nav-pills flex-column">
+
+    @foreach (var parent in Model)
+    {
+        if (parent.Child.Count > 0)
+        {
+            <li>
+                <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="collapse" href="#" role="button" aria-expanded="false" data-bs-target="#genre@(parent.GetHashCode())">
+                    @parent.Name
+                </a>
+                <div id="genre@(parent.GetHashCode())" class="collapse">
+                    <ul class="list-unstyled">
+                        @foreach (var kind in parent.Child)
+                        {
+                            <li>
+                                <a asp-controller="Catalog" asp-action="Index" asp-route-GenreId="@kind.Id" class="nav-link text-dark fw-light pb-0">
+                                    @kind.Name
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a asp-controller="Catalog" asp-action="Index" asp-route-GenreId="@parent.Id" class="nav-link text-dark">
+                    @parent.Name
+                </a>
+            </li>
+        }
+    }
+
+</ul>*@
+
+<div class="accordion accordion-flush" id="accordionGenre">
+    <ul class="nav nav-pills flex-column">
+        @foreach (var parent in Model)
+        {
+            if (parent.Child.Count > 0)
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="genreHead@(parent.GetHashCode())">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#genre@(parent.GetHashCode())" aria-expanded="false" aria-controls="genre@(parent.GetHashCode())">
+                            @parent.Name
+                        </button>
+                    </h2>
+                    <div id="genre@(parent.GetHashCode())" class="accordion-collapse collapse" aria-labelledby="genreHead@(parent.GetHashCode())" data-bs-parent="#accordionGenre">
+                        <div class="accordion-body">
+                            <ul class="list-unstyled">
+                                @foreach (var kind in parent.Child)
+                                {
+                                    <li>
+                                        <a asp-controller="Catalog" asp-action="Index" asp-route-GenreId="@kind.Id" class="nav-link text-dark fw-light pb-0">
+                                            <span class="float-end">(@kind.CountProducts)</span>
+                                            @kind.Name
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a asp-controller="Catalog" asp-action="Index" asp-route-GenreId="@parent.Id" class="nav-link text-dark">
+                        <span class="float-end">(@parent.CountProducts)</span>
+                        @parent.Name
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+
+</div>

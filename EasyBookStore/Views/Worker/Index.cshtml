@@ -1,6 +1,7 @@
-﻿@model IEnumerable<Worker>
+﻿@using EasyBookStore.Domain.Models.Identity
+@model IEnumerable<EasyBookStore.Domain.Models.Worker>
 
-@{ 
+@{
     ViewBag.Title = "Сотрудники магазина";
 }
 
@@ -9,10 +10,15 @@
     <hr />
     <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Главная страница</a>
     <hr />
-    
-    <p>
-        <a class="btn btn-outline-success" asp-controller="Worker" asp-action="Create">Создать</a>
-    </p>
+
+    @if (User.IsInRole(Role.Administrators))
+    {
+        <div class="row">
+            <p>
+                <a class="btn btn-outline-success" asp-controller="Worker" asp-action="Create">Создать нового сотрудника</a>
+            </p>
+        </div>
+    }
 
     <table class="table table-striped">
         <thead>
@@ -23,8 +29,11 @@
                 <th>Отчество</th>
                 <th>Возраст</th>
                 <th></th>
-                <th></th>
-                <th></th>
+                @if (User.IsInRole(Role.Administrators))
+                {
+                    <th></th>
+                    <th></th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -41,16 +50,19 @@
                             <i class="fas fa-info"></i>
                         </a>
                     </td>
-                    <td>
-                        <a class="btn btn-outline-dark" asp-controller="Worker" asp-action="Edit" asp-route-id="@worker.Id">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a class="btn btn-outline-danger" asp-controller="Worker" asp-action="Delete" asp-route-id="@worker.Id">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </td>
+                    @if (User.IsInRole(Role.Administrators))
+                    {
+                        <td>
+                            <a class="btn btn-outline-dark" asp-controller="Worker" asp-action="Edit" asp-route-id="@worker.Id">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-danger" asp-controller="Worker" asp-action="Delete" asp-route-id="@worker.Id">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>

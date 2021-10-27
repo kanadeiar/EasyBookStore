@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.CodeAnalysis;
 
 namespace EasyBookStore.WebModels
 {
-    public class WorkerEditWebModel
+    public class WorkerEditWebModel : IValidatableObject
     {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
@@ -26,7 +28,16 @@ namespace EasyBookStore.WebModels
         public string Patronymic { get; set; }
 
         [Display(Name = "Возраст")]
-        [Range(10, 200, ErrorMessage = "Возраст должен быть в диапазоне от 10 до 200 лет")]
         public int Age { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext context)
+        {
+            List<ValidationResult> errors = new List<ValidationResult>();
+
+            if (Age < 10 || Age > 90)
+                errors.Add(new ValidationResult("Возраст человека должен быть в диапазоне от 10 до 90 лет", new[] { nameof(Age) } ));
+
+            return errors;
+        }
     }
 }

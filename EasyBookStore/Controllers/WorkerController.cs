@@ -7,10 +7,14 @@ using EasyBookStore.Models.Data;
 using EasyBookStore.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using EasyBookStore.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
+using EasyBookStore.Domain.Models.Identity;
 
 namespace EasyBookStore.Controllers
 {
     [Route("Worker/[action]/{id?}")]
+    [Authorize]
     public class WorkerController : Controller
     {
         private readonly IWorkerData _workerData;
@@ -22,14 +26,12 @@ namespace EasyBookStore.Controllers
             _logger = logger;
         }   
 
-        [Route("~/workers")]
         public async Task<IActionResult> Index()
         {
             var workers = await _workerData.GetAll();
             return View(workers);
         }
 
-        [Route("~/worker/info-{id}")]
         public async Task<IActionResult> Details(int id)
         {
             if (id < 0) return BadRequest();
@@ -49,11 +51,13 @@ namespace EasyBookStore.Controllers
             return View(workerWebModel);
         }
 
+        [Authorize(Roles = Role.Administrators)]
         public async Task<IActionResult> Create()
         {
             return View("Edit", new WorkerEditWebModel());
         }
 
+        [Authorize(Roles = Role.Administrators)]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id is null) return View(new WorkerEditWebModel());
@@ -72,9 +76,18 @@ namespace EasyBookStore.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = Role.Administrators)]
         public async Task<IActionResult> Edit(WorkerEditWebModel model)
         {
+            if (model is null)
+                return BadRequest();
+            if (model.FirstName == "Ленин")
+                ModelState.AddModelError(nameof(model.FirstName), "Запрещено иметь имя \"Ленин\"");
+            if (model.LastName == "Иванов" && model.FirstName == "Иван" && model.Patronymic == "Иванович")
+                ModelState.AddModelError(string.Empty, "Нельзя иметь фамилию имя и отчество \"Иванов Иван Иванович\"");
+            if (!ModelState.IsValid)
+                return View(model);
+
             var worker = new Worker
             {
                 Id = model.Id,
@@ -90,6 +103,7 @@ namespace EasyBookStore.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = Role.Administrators)]
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0) return BadRequest();
@@ -108,7 +122,7 @@ namespace EasyBookStore.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = Role.Administrators)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (id <= 0) return BadRequest();
