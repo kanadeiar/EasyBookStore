@@ -14,11 +14,23 @@ namespace EasyBookStore.Services.Memory
         {
             return StaticData.Genres;
         }
+
+        public Genre GetGenre(int id)
+        {
+            return StaticData.Genres.FirstOrDefault(g => g.Id == id);
+        }
+
         public IEnumerable<Genre> GetGenresWithProducts() => GetGenres();
         public IEnumerable<Author> GetAuthors()
         {
             return StaticData.Authors;
         }
+
+        public Author GetAuthor(int id)
+        {
+            return StaticData.Authors.FirstOrDefault(a => a.Id == id);
+        }
+
         public IEnumerable<Author> GetAuthorsWithProducts() => GetAuthors();
 
         public IEnumerable<Product> GetProducts(ProductFilter filter = null)
@@ -34,8 +46,9 @@ namespace EasyBookStore.Services.Memory
             return query;
         }
 
-
-
-
+        public Product GetProduct(int id)
+        {
+            return StaticData.Products.FirstOrDefault(p => p.Id == id);
+        }
     }
 }
