@@ -8,7 +8,7 @@
     <title>@ViewBag.Title - Магазин книг</title>
 
     <partial name="Partial/Layout/_StylesPartial" />
-    
+
     @await RenderSectionAsync("Styles", false)
 
     <link rel="icon" href="~/favicon.ico" type="image/x-icon">
@@ -18,15 +18,13 @@
     <base href="~/" />
 </head>
 <body>
-    <partial name="Partial/Layout/_HeaderPartial"/>
-
+    <partial name="Partial/Layout/_HeaderPartial" />
 
     <main role="main" class="pb-5">
         @RenderBody()
     </main>
 
-
-    <partial name="Partial/Layout/_FooterPartial"/>
+    <partial name="Partial/Layout/_FooterPartial" />
 
     <partial name="Partial/Layout/_ScriptsPartial" />
 

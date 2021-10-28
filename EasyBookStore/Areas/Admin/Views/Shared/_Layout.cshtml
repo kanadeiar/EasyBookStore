@@ -2,12 +2,30 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewBag.Title - Админка магазина книг</title>
+
+    <partial name="Partial/Layout/_StylesPartial" />
+
+    @await RenderSectionAsync("Styles", false)
+
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" href="~/favicon.png" sizes="500x500">
+
+    <base href="~/" />
 </head>
 <body>
-    <div>
+    <partial name="Partial/Layout/_HeaderPartial" />
+
+    <main role="main" class="pb-5">
         @RenderBody()
-    </div>
+    </main>
+
+    <partial name="Partial/Layout/_ScriptsPartial" />
+
+    @await RenderSectionAsync("Scripts", false)
 </body>
 </html>
