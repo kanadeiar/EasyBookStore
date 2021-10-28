@@ -2,6 +2,10 @@
     <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-secondary">
         <vc:cart></vc:cart>
     </a>
-    <a asp-controller="Account" asp-action="Register" class="btn btn-outline-success"><i class="fas fa-user-lock"></i> Регистрация</a>
-    <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path" class="btn btn-outline-info"><i class="fas fa-lock-open"></i> Вход</a>
+    <a asp-controller="Account" asp-action="Register" class="btn btn-outline-success">
+        <i class="fas fa-user-lock"></i> Регистрация
+    </a>
+    <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path" class="btn btn-outline-info">
+        <i class="fas fa-lock-open"></i> Вход
+    </a>
 </div>
