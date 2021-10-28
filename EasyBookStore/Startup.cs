@@ -68,9 +68,10 @@ namespace EasyBookStore
             services.AddScoped<ICartStore, CookiesCartStore>();
             services.AddScoped<ICartService, CartService>();
 
-            services.AddSingleton<IWorkerData, InMemoryWorkerData>();
+            //services.AddSingleton<IWorkerData, InMemoryWorkerData>();
             //services.AddSingleton<IProductData, InMemoryProductData>();
             services.AddScoped<IProductData, DatabaseProductData>();
+            services.AddScoped<IWorkerData, DatabaseWorkerData>();
 
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();

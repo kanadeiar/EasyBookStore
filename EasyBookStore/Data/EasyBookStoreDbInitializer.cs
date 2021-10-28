@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using EasyBookStore.Domain.Models;
 using EasyBookStore.Domain.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -64,6 +65,15 @@ namespace EasyBookStore.Data
                 throw;
             }
 
+            try
+            {
+                await InitWorkersAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Ошибка инициализации данных работников");
+                throw;
+            }
         }
 
         /// <summary> Пересоздание базы данных </summary>
@@ -165,6 +175,36 @@ namespace EasyBookStore.Data
                     _logger.LogInformation($"Роль {role} успешно создана");
                 }
             }
+        }
+
+        /// <summary> Инициализация данных работников </summary>
+        private async Task InitWorkersAsync()
+        {
+            var timer = Stopwatch.StartNew();
+
+            if (_context.Workers.Any())
+            {
+                _logger.LogInformation("База данных уже содержит работников - она не требует инициализации");
+                return;
+            }
+
+            var workers = TestData.Workers.Select(w => new Worker
+            {
+                LastName = w.LastName,
+                FirstName = w.FirstName,
+                Patronymic = w.Patronymic,
+                Age = w.Age,
+            });
+
+            await using (await _context.Database.BeginTransactionAsync())
+            {
+                await _context.Workers.AddRangeAsync(workers);
+
+                await _context.SaveChangesAsync();
+                await _context.Database.CommitTransactionAsync();
+            }
+
+            _logger.LogInformation($"Успешное завершение инициализации данных работников за {timer.Elapsed.TotalMilliseconds} мс");
         }
     }
 }

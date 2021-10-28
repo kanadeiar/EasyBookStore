@@ -10,6 +10,7 @@ namespace EasyBookStore.Dal.Context
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Worker> Workers { get; set; }
 
         public BookStoreContext(DbContextOptions<BookStoreContext> options) : base(options) { }
     }
