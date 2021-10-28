@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.11">
       <PrivateAssets>all</PrivateAssets>
@@ -24,5 +25,7 @@
     <ProjectReference Include="..\EasyBookStore.Dal\EasyBookStore.Dal.csproj" />
     <ProjectReference Include="..\EasyBookStore.Domain\EasyBookStore.Domain.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

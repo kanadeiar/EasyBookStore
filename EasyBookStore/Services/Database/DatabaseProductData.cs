@@ -23,6 +23,12 @@ namespace EasyBookStore.Services.Database
         {
             return _context.Genres;
         }
+
+        public Genre GetGenre(int id)
+        {
+            return _context.Genres.SingleOrDefault(g => g.Id == id);
+        }
+
         public IEnumerable<Genre> GetGenresWithProducts()
         {
             return _context.Genres.Include(g => g.Products);
@@ -31,13 +37,21 @@ namespace EasyBookStore.Services.Database
         {
             return _context.Authors;
         }
+
+        public Author GetAuthor(int id)
+        {
+            return _context.Authors.SingleOrDefault(a => a.Id == id);
+        }
+
         public IEnumerable<Author> GetAuthorsWithProducts()
         {
             return _context.Authors.Include(a => a.Products);
         }
         public IEnumerable<Product> GetProducts(ProductFilter filter = null)
         {
-            IQueryable<Product> query = _context.Products;
+            IQueryable<Product> query = _context.Products
+                .Include(p => p.Genre)
+                .Include(p => p.Author);
 
             if (filter?.Ids?.Length > 0)
             {
@@ -55,8 +69,12 @@ namespace EasyBookStore.Services.Database
             return query;
         }
 
-
-
-
+        public Product GetProduct(int id)
+        {
+            return _context.Products
+                .Include(p => p.Genre)
+                .Include(p => p.Author)
+                .SingleOrDefault(p => p.Id == id);
+        }
     }
 }

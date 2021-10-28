@@ -46,6 +46,9 @@ namespace EasyBookStore.Controllers
             {
                 _logger.LogInformation($"Пользователь {user.UserName} успешно зарегистрирован");
                 await _signInManager.SignInAsync(user, false);
+
+                await _userManager.AddToRoleAsync(user, Role.Users);
+
                 return RedirectToAction("Index", "Home");
             }
             var errors = registerResult.Errors.Select(e => IdentityErrorCodes.GetDescription(e.Code));
