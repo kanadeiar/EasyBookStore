@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using EasyBookStore.Domain.Common;
 using EasyBookStore.Interfaces.Services;
 using EasyBookStore.Services;
@@ -20,15 +21,15 @@ namespace EasyBookStore.Controllers
             _productData = productData;
             _mapper = mapper;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var model = _productData.GetProducts(new ProductFilter {Ids = new []{1, 2, 3}})
+            var model = (await _productData.GetProductsAsync(new ProductFilter {Ids = new []{1, 2, 3}}))
                 .Select(p => _mapper.Map(p));
 
-            ViewBag.NewBooks = _productData.GetProducts(new ProductFilter { Ids = new[] { 4, 5, 6 } })
+            ViewBag.NewBooks = (await _productData.GetProductsAsync(new ProductFilter { Ids = new[] { 4, 5, 6 } }))
                 .Select(p => _mapper.Map(p));
 
-            ViewBag.RecommendedBooks = _productData.GetProducts(new ProductFilter { Ids = new[] { 1, 2, 3, 4, 5, 6, 7, 8 } })
+            ViewBag.RecommendedBooks = (await _productData.GetProductsAsync(new ProductFilter { Ids = new[] { 1, 2, 3, 4, 5, 6, 7, 8 } }))
                 .Select(p => _mapper.Map(p));
 
             return View(model);
@@ -46,7 +47,6 @@ namespace EasyBookStore.Controllers
                 default: return Content($"Status --- {id}");
                 case "404": return View("Error404");
             }
-            
         }
     }
 }

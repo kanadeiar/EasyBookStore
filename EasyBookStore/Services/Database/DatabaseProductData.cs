@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EasyBookStore.Services.Database
 {
@@ -19,35 +20,26 @@ namespace EasyBookStore.Services.Database
             _context = context;
             _logger = logger;
         }
-        public IEnumerable<Genre> GetGenres()
+
+        public async Task<IEnumerable<Genre>> GetGenresAsync()
         {
-            return _context.Genres;
+            return await _context.Genres.Include(g => g.Products).ToArrayAsync().ConfigureAwait(false);
+        }
+        public async Task<Genre> GetGenreAsync(int id)
+        {
+            return await _context.Genres.Include(g => g.Products).SingleOrDefaultAsync(g => g.Id == id).ConfigureAwait(false);
         }
 
-        public Genre GetGenre(int id)
+        public async Task<IEnumerable<Author>> GetAuthorsAsync()
         {
-            return _context.Genres.SingleOrDefault(g => g.Id == id);
+            return await _context.Authors.Include(a => a.Products).ToArrayAsync().ConfigureAwait(false);
+        }
+        public async Task<Author> GetAuthorAsync(int id)
+        {
+            return await _context.Authors.Include(a => a.Products).SingleOrDefaultAsync(a => a.Id == id).ConfigureAwait(false);
         }
 
-        public IEnumerable<Genre> GetGenresWithProducts()
-        {
-            return _context.Genres.Include(g => g.Products);
-        }
-        public IEnumerable<Author> GetAuthors()
-        {
-            return _context.Authors;
-        }
-
-        public Author GetAuthor(int id)
-        {
-            return _context.Authors.SingleOrDefault(a => a.Id == id);
-        }
-
-        public IEnumerable<Author> GetAuthorsWithProducts()
-        {
-            return _context.Authors.Include(a => a.Products);
-        }
-        public IEnumerable<Product> GetProducts(ProductFilter filter = null)
+        public async Task<IEnumerable<Product>> GetProductsAsync(ProductFilter filter = null)
         {
             IQueryable<Product> query = _context.Products
                 .Include(p => p.Genre)
@@ -65,16 +57,17 @@ namespace EasyBookStore.Services.Database
                 if (filter?.AuthorId is { } author)
                     query = query.Where(p => p.AuthorId == author);
             }
-            _logger.LogInformation($"SQL: {query.ToQueryString()}");
-            return query;
-        }
 
-        public Product GetProduct(int id)
+            _logger.LogInformation($"SQL: {query.ToQueryString()}");
+
+            return await query.ToArrayAsync().ConfigureAwait(false);
+        }
+        public async Task<Product> GetProductAsync(int id)
         {
-            return _context.Products
+            return await _context.Products
                 .Include(p => p.Genre)
                 .Include(p => p.Author)
-                .SingleOrDefault(p => p.Id == id);
+                .SingleOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
         }
     }
 }

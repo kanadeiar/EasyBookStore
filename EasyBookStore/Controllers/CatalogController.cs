@@ -19,7 +19,7 @@ namespace EasyBookStore.Controllers
             _productData = productData;
             _mapper = mapper;
         }
-        public IActionResult Index(int? GenreId, int? AuthorId)
+        public async Task<IActionResult> Index(int? GenreId, int? AuthorId)
         {
             var filter = new ProductFilter
             {
@@ -27,7 +27,7 @@ namespace EasyBookStore.Controllers
                 AuthorId = AuthorId,
             };
 
-            var products = _productData.GetProducts(filter);
+            var products = await _productData.GetProductsAsync(filter);
 
             var model = new CatalogWebModel
             {
@@ -41,16 +41,16 @@ namespace EasyBookStore.Controllers
             return View(model);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var product = _productData.GetProduct(id);
+            var product = await _productData.GetProductAsync(id);
 
             if (product is null)
                 return NotFound();
 
             var model = _mapper.Map(product);
 
-            ViewBag.RecommendedBooks = _productData.GetProducts(new ProductFilter { Ids = new[] { 1, 2, 3, 4, 5, 6, 7, 8 } })
+            ViewBag.RecommendedBooks = (await _productData.GetProductsAsync(new ProductFilter { Ids = new[] { 1, 2, 3, 4, 5, 6, 7, 8 } }))
                 .Select(p => _mapper.Map(p));
 
             return View(model);

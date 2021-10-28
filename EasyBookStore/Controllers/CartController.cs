@@ -16,9 +16,9 @@ namespace EasyBookStore.Controllers
             _cartService = cartService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var model = _cartService.GetWebModel();
+            var model = await _cartService.GetWebModelAsync();
             return View(model);
         }
 
