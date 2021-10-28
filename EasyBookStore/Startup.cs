@@ -1,6 +1,7 @@
 using System;
 using EasyBookStore.Dal.Context;
 using EasyBookStore.Data;
+using EasyBookStore.Domain.Models;
 using EasyBookStore.Domain.Models.Identity;
 using EasyBookStore.Infrastructure.Middleware;
 using EasyBookStore.Interfaces.Services;
@@ -8,6 +9,7 @@ using EasyBookStore.Services;
 using EasyBookStore.Services.Cookies;
 using EasyBookStore.Services.Database;
 using EasyBookStore.Services.Memory;
+using EasyBookStore.WebModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -64,6 +66,13 @@ namespace EasyBookStore
             });
 
             services.AddTransient<EasyBookStoreDbInitializer>();
+
+            services.AddScoped<IMapper<ProductWebModel>, WebMapperService>();
+            services.AddScoped<IMapper<WorkerDetailsWebModel>, WebMapperService>();
+            services.AddScoped<IMapper<WorkerEditWebModel>, WebMapperService>();
+            services.AddScoped<IMapper<Worker>, WebMapperService>();
+
+            services.AddTransient<WebMapperService>();
 
             services.AddScoped<ICartStore, CookiesCartStore>();
             services.AddScoped<ICartService, CartService>();

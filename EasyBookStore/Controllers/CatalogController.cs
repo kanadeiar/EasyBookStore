@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EasyBookStore.Domain.Common;
 using EasyBookStore.Interfaces.Services;
+using EasyBookStore.Services;
 using EasyBookStore.WebModels;
 
 namespace EasyBookStore.Controllers
@@ -12,9 +13,11 @@ namespace EasyBookStore.Controllers
     public class CatalogController : Controller
     {
         private readonly IProductData _productData;
-        public CatalogController(IProductData productData)
+        private readonly IMapper<ProductWebModel> _mapper;
+        public CatalogController(IProductData productData, IMapper<ProductWebModel> mapper)
         {
             _productData = productData;
+            _mapper = mapper;
         }
         public IActionResult Index(int? GenreId, int? AuthorId)
         {
@@ -32,16 +35,7 @@ namespace EasyBookStore.Controllers
                 AuthorId = AuthorId,
                 Products = products
                     .OrderBy(p => p.Order)
-                    .Select(p => new ProductWebModel
-                    {
-                        Id = p.Id,
-                        Genre = p.Genre.Name,
-                        Author = p.Author?.Name ?? "<Неизвестный>",
-                        Name = p.Name,
-                        ImageUrl = p.ImageUrl,
-                        Price = p.Price,
-                        Message = p.Message,
-                    })
+                    .Select(p => _mapper.Map(p))
             };
 
             return View(model);
@@ -54,28 +48,10 @@ namespace EasyBookStore.Controllers
             if (product is null)
                 return NotFound();
 
-            var model = new ProductWebModel
-            {
-                Id = product.Id,
-                Author = product.Author?.Name ?? "<Неизвестный>",
-                Genre = product.Genre.Name,
-                Name = product.Name,
-                ImageUrl = product.ImageUrl,
-                Price = product.Price,
-                Message = product.Message,
-            };
+            var model = _mapper.Map(product);
 
             ViewBag.RecommendedBooks = _productData.GetProducts(new ProductFilter { Ids = new[] { 1, 2, 3, 4, 5, 6, 7, 8 } })
-                .Select(p => new ProductWebModel
-                {
-                    Id = p.Id,
-                    Genre = p.Genre.Name,
-                    Author = p.Author?.Name ?? "<Неизвестный>",
-                    Name = p.Name,
-                    ImageUrl = p.ImageUrl,
-                    Price = p.Price,
-                    Message = p.Message,
-                });
+                .Select(p => _mapper.Map(p));
 
             return View(model);
         }
