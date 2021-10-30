@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<ProductWebModel>
+@{
     ViewBag.Title = "Редактирование товаров";
 }
 
@@ -9,6 +10,43 @@
         </div>
         <div class="col-sm-9">
             <h1>@ViewBag.Title</h1>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th><th>@Html.DisplayNameFor(m => m.Id)</th><th>@Html.DisplayNameFor(m => m.Name)</th>
+                            <th>@Html.DisplayNameFor(m => m.Author)</th><th>@Html.DisplayNameFor(m => m.Genre)</th><th>@Html.DisplayNameFor(m => m.Price)</th>
+                            <th>@Html.DisplayNameFor(m => m.ImageUrl)</th><th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="#" class="btn btn-outline-primary">
+                                        <i class="fas fa-edit"></i>Редакт.
+                                    </a>
+                                </td>
+                                <td>@Html.DisplayFor(_ => product.Id)</td>
+                                <td>@Html.DisplayFor(_ => product.Name)</td>
+                                <td>@Html.DisplayFor(_ => product.Author)</td>
+                                <td>@Html.DisplayFor(_ => product.Genre)</td>
+                                <td>@Html.DisplayFor(_ => product.Price)</td>
+                                <td>
+                                    <img src="~/images/books/@product.ImageUrl" width="50" alt="@product.Name"/>
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-outline-danger">
+                                        <i class="fas fa-trash"></i>Удалить
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
 
         </div>
 
