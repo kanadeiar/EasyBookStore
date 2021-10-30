@@ -85,8 +85,8 @@ namespace EasyBookStore.Services
             var productWebs = products.Select(p => new ProductWebModel
             {
                 Id = p.Id,
-                Author = p.Author.Name,
-                Genre = p.Genre.Name,
+                AuthorName = p.Author?.Name,
+                GenreName = p.Genre?.Name,
                 Name = p.Name,
                 ImageUrl = p.ImageUrl,
                 Price = p.Price,

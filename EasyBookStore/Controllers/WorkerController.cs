@@ -61,9 +61,9 @@ namespace EasyBookStore.Controllers
         [Authorize(Roles = Role.Administrators)]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id is null) return View(new WorkerEditWebModel());
+            if (id is not { } workerId) return View(new WorkerEditWebModel());
 
-            var worker = await _workerData.Get((int)id);
+            var worker = await _workerData.Get(workerId);
             if (worker is null) return NotFound();
 
             var model = _editMapper.Map(worker);

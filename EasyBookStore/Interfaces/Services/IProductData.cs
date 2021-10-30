@@ -18,7 +18,7 @@ namespace EasyBookStore.Interfaces.Services
         /// <summary> Получить одного автора </summary>
         Task<Author> GetAuthorAsync(int id);
         /// <summary> Получить товары-книги </summary>
-        Task<IEnumerable<Product>> GetProductsAsync(ProductFilter filter = null);
+        Task<IEnumerable<Product>> GetProductsAsync(ProductFilter filter = null, bool includes = false);
         /// <summary> Получить один товар-книгу </summary>
         Task<Product> GetProductAsync(int id);
     }

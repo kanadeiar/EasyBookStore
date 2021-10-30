@@ -71,6 +71,8 @@ namespace EasyBookStore
             services.AddScoped<IMapper<WorkerDetailsWebModel>, WebMapperService>();
             services.AddScoped<IMapper<WorkerEditWebModel>, WebMapperService>();
             services.AddScoped<IMapper<Worker>, WebMapperService>();
+            services.AddScoped<IMapper<ProductEditWebModel>, WebMapperService>();
+            services.AddScoped<IMapper<Product>, WebMapperService>();
 
             services.AddTransient<WebMapperService>();
 

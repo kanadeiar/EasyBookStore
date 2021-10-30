@@ -1,0 +1,25 @@
+﻿@model ProductEditWebModel
+@{
+    ViewBag.Title = "Редактирование товара";
+}
+
+<div class="container-md">
+    <div class="row">
+        <div class="col-sm-3">
+            <partial name="Partial/_LeftSidebarPartial" />
+        </div>
+        <div class="col-sm-9">
+            <h1>@ViewBag.Title</h1>
+
+            <hr />
+            <a class="btn btn-outline-secondary" asp-area="Admin" asp-controller="Product" asp-action="Index">Редактирование всего каталога</a>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-6">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

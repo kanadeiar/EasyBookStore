@@ -17,7 +17,8 @@ namespace EasyBookStore.Services
         TOut Map(object source);
     }
 
-    public class WebMapperService : IMapper<ProductWebModel>, IMapper<WorkerDetailsWebModel>, IMapper<WorkerEditWebModel>, IMapper<Worker>
+    public class WebMapperService : IMapper<ProductWebModel>, IMapper<WorkerDetailsWebModel>, IMapper<WorkerEditWebModel>, IMapper<Worker>, 
+        IMapper<ProductEditWebModel>, IMapper<Product>
     {
         public ProductWebModel Map(object source)
         {
@@ -25,8 +26,8 @@ namespace EasyBookStore.Services
             var result = new ProductWebModel
             {
                 Id = product.Id,
-                Genre = product.Genre.Name,
-                Author = product.Author?.Name ?? "<Неизвестный>",
+                GenreName = product.Genre.Name,
+                AuthorName = product.Author?.Name ?? "<Неизвестный>",
                 Name = product.Name,
                 ImageUrl = product.ImageUrl,
                 Price = product.Price,
@@ -73,62 +74,41 @@ namespace EasyBookStore.Services
             };
             return worker;
         }
+
+        ProductEditWebModel IMapper<ProductEditWebModel>.Map(object source)
+        {
+            var product = (Product)source;
+            var result = new ProductEditWebModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Order = product.Order,
+                GenreId = product.GenreId,
+                GenreName = product.Genre?.Name,
+                AuthorId = product.AuthorId,
+                AuthorName = product.Author?.Name,
+                ImageUrl = product.ImageUrl,
+                Price = product.Price,
+                Message = product.Message,
+            };
+            return result;
+        }
+
+        Product IMapper<Product>.Map(object source)
+        {
+            var model = (ProductEditWebModel)source;
+            var product = new Product
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Order = model.Order,
+                GenreId = model.GenreId,                
+                AuthorId = model.AuthorId,
+                ImageUrl = model.ImageUrl,
+                Price = model.Price,
+                Message = model.Message,
+            };
+            return product;
+        }
     }
-
-    //public class MapperService
-    //{
-    //    public ProductWebModel MapToWeb(Product product)
-    //    {
-    //        var result = new ProductWebModel
-    //        {
-    //            Id = product.Id,
-    //            Genre = product.Genre.Name,
-    //            Author = product.Author?.Name ?? "<Неизвестный>",
-    //            Name = product.Name,
-    //            ImageUrl = product.ImageUrl,
-    //            Price = product.Price,
-    //            Message = product.Message,
-    //        };
-    //        return result;
-    //    }
-
-    //    public WorkerDetailsWebModel MapToWeb(Worker worker)
-    //    {
-    //        var result = new WorkerDetailsWebModel
-    //        {
-    //            Id = worker.Id,
-    //            FirstName = worker.FirstName,
-    //            LastName = worker.LastName,
-    //            Patronymic = worker.Patronymic,
-    //            Age = worker.Age,
-    //        };
-    //        return result;
-    //    }
-
-    //    public WorkerEditWebModel MapToEditWeb(Worker worker)
-    //    {
-    //        var result = new WorkerEditWebModel
-    //        {
-    //            Id = worker.Id,
-    //            FirstName = worker.FirstName,
-    //            LastName = worker.LastName,
-    //            Patronymic = worker.Patronymic,
-    //            Age = worker.Age,
-    //        };
-    //        return result;
-    //    }
-
-    //    public Worker MapFromEditWeb(WorkerEditWebModel model)
-    //    {
-    //        var worker = new Worker
-    //        {
-    //            Id = model.Id,
-    //            FirstName = model.FirstName,
-    //            LastName = model.LastName,
-    //            Patronymic = model.Patronymic,
-    //            Age = model.Age,
-    //        };
-    //        return worker;
-    //    }
-    //}
 }

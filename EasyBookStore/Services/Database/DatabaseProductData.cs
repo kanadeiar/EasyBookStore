@@ -39,11 +39,13 @@ namespace EasyBookStore.Services.Database
             return await _context.Authors.Include(a => a.Products).SingleOrDefaultAsync(a => a.Id == id).ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Product>> GetProductsAsync(ProductFilter filter = null)
+        public async Task<IEnumerable<Product>> GetProductsAsync(ProductFilter filter = null, bool includes = false)
         {
-            IQueryable<Product> query = _context.Products
-                .Include(p => p.Genre)
-                .Include(p => p.Author);
+            IQueryable<Product> query = (includes)
+               ? _context.Products
+                   .Include(p => p.Genre)
+                   .Include(p => p.Author)
+               : _context.Products;
 
             if (filter?.Ids?.Length > 0)
             {
