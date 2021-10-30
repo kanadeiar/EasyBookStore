@@ -14,8 +14,12 @@
                             <div class="card shadow">
                                 <a asp-controller="Catalog" asp-action="Details" asp-route-id="@product.Id"><img src="~/images/books/@product.ImageUrl" class="card-img-top" alt="@product.Name"></a>
                                 <div class="card-body">
-                                    <h5 class="card-title">@product.Name</h5>
-                                    <a asp-controller="Catalog" asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-info">Подробности</a>
+                                    <div class="row">
+                                        <a asp-controller="Catalog" asp-action="Details" asp-route-id="@product.Id" class="h5 card-title text-decoration-none text-dark">
+                                            @product.Name
+                                        </a>
+                                    </div>
+                                    <a asp-controller="Catalog" asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-info mt-2">Подробности</a>
                                 </div>
                                 <div class="card-footer">Рекомендация</div>
                             </div>
@@ -33,8 +37,12 @@
                             <div class="card shadow">
                                 <a asp-controller="Catalog" asp-action="Details" asp-route-id="@product.Id"><img src="~/images/books/@product.ImageUrl" class="card-img-top" alt="@product.Name"></a>
                                 <div class="card-body">
-                                    <h5 class="card-title">@product.Name</h5>
-                                    <a asp-controller="Catalog" asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-info">Подробности</a>
+                                    <div class="row">
+                                        <a asp-controller="Catalog" asp-action="Details" asp-route-id="@product.Id" class="h5 card-title text-decoration-none text-dark">
+                                            @product.Name
+                                        </a>
+                                    </div>
+                                    <a asp-controller="Catalog" asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-info mt-2">Подробности</a>
                                 </div>
                                 <div class="card-footer">Рекомендация</div>
                             </div>
