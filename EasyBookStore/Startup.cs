@@ -8,7 +8,6 @@ using EasyBookStore.Interfaces.Services;
 using EasyBookStore.Services;
 using EasyBookStore.Services.Cookies;
 using EasyBookStore.Services.Database;
-using EasyBookStore.Services.Memory;
 using EasyBookStore.WebModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -79,8 +78,7 @@ namespace EasyBookStore
             services.AddScoped<ICartStore, CookiesCartStore>();
             services.AddScoped<ICartService, CartService>();
 
-            //services.AddSingleton<IWorkerData, InMemoryWorkerData>();
-            //services.AddSingleton<IProductData, InMemoryProductData>();
+
             services.AddScoped<IProductData, DatabaseProductData>();
             services.AddScoped<IWorkerData, DatabaseWorkerData>();
 
