@@ -34,8 +34,8 @@ namespace EasyBookStore.Services.Database
         {
             if (worker is null)
                 throw new ArgumentNullException(nameof(worker));
-            await _context.Workers.AddAsync(worker).ConfigureAwait(false);
-            await _context.SaveChangesAsync();
+            _context.Workers.Add(worker);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
             return worker.Id;
         }
 
@@ -50,10 +50,10 @@ namespace EasyBookStore.Services.Database
                 origin.FirstName = worker.FirstName;
                 origin.Patronymic = worker.Patronymic;
                 origin.Age = worker.Age;
-                _context.Entry(origin).State = EntityState.Modified;
+                _context.Update(origin);
             }
             else
-                _context.Entry(worker).State = EntityState.Modified;
+                _context.Update(worker);
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 

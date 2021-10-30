@@ -1,4 +1,5 @@
-﻿using EasyBookStore.Dal.Context;
+﻿using System;
+using EasyBookStore.Dal.Context;
 using EasyBookStore.Domain.Common;
 using EasyBookStore.Domain.Models;
 using EasyBookStore.Interfaces.Services;
@@ -70,6 +71,45 @@ namespace EasyBookStore.Services.Database
                 .Include(p => p.Genre)
                 .Include(p => p.Author)
                 .SingleOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
+        }
+
+        public async Task<int> AddProductAsync(Product product)
+        {
+            if (product is null)
+                throw new ArgumentNullException(nameof(product));
+            _context.Add(product);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+            return product.Id;
+        }
+
+        public async Task UpdateProductAsync(Product product)
+        {
+            if (product is null)
+                throw new ArgumentNullException(nameof(product));
+            if (_context.Products.Local.Any(e => e == product) == false)
+            {
+                var origin = await _context.Products.FindAsync(product.Id).ConfigureAwait(false);
+                origin.Name = product.Name;
+                origin.Order = product.Order;
+                origin.GenreId = product.GenreId;
+                origin.AuthorId = product.AuthorId;
+                origin.ImageUrl = product.ImageUrl;
+                origin.Price = product.Price;
+                origin.Message = product.Message;
+                _context.Update(origin);
+            }
+            else
+                _context.Update(product);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task<bool> DeleteProductAsync(int id)
+        {
+            if (await GetProductAsync(id) is not { } product)
+                return false;
+            _context.Remove(product);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

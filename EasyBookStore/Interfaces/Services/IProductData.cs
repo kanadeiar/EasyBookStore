@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using EasyBookStore.Domain.Common;
 using EasyBookStore.Domain.Models;
-using Microsoft.VisualBasic;
 
 namespace EasyBookStore.Interfaces.Services
 {
@@ -21,5 +20,11 @@ namespace EasyBookStore.Interfaces.Services
         Task<IEnumerable<Product>> GetProductsAsync(ProductFilter filter = null, bool includes = false);
         /// <summary> Получить один товар-книгу </summary>
         Task<Product> GetProductAsync(int id);
+        /// <summary> Добавить товар </summary>
+        Task<int> AddProductAsync(Product product);
+        /// <summary> Обновить товар </summary>
+        Task UpdateProductAsync(Product product);
+        /// <summary> Удалить товар </summary>
+        Task<bool> DeleteProductAsync(int id);
     }
 }
