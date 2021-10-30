@@ -88,5 +88,14 @@ namespace EasyBookStore.Areas.Admin.Controllers
             ViewBag.Authors = new SelectList(await _productData.GetAuthorsAsync(), "Id", "Name");
             return View(model);
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (id <= 0) return BadRequest();
+            await _productData.DeleteProductAsync(id);
+
+            return RedirectToAction("Index", "Product");
+        }
     }
 }
