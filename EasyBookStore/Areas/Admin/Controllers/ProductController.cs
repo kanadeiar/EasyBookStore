@@ -6,7 +6,7 @@ namespace EasyBookStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = Role.Administrators)]
-    public class HomeController : Controller
+    public class ProductController : Controller
     {
         public IActionResult Index()
         {
