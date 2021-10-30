@@ -44,7 +44,7 @@ namespace EasyBookStore.WebModels
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
-        [Display(Name = "Сообщение о книге")]
+        [Display(Name = "Краткое сообщение о книге")]
         public string Message { get; set; }
     }
 }

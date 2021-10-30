@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Linq;
 using EasyBookStore.Domain.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EasyBookStore.Areas.Admin.Controllers
 {
@@ -33,6 +34,8 @@ namespace EasyBookStore.Areas.Admin.Controllers
 
         public async Task<IActionResult> Create()
         {
+            ViewBag.Genres = new SelectList(await _productData.GetGenresAsync(), "Id", "Name");
+            ViewBag.Authors = new SelectList(await _productData.GetAuthorsAsync(), "Id", "Name");
             return View("Edit", new ProductEditWebModel());
         }
 
@@ -44,7 +47,32 @@ namespace EasyBookStore.Areas.Admin.Controllers
             if (product is null) return NotFound();
 
             var model = _mapperToWeb.Map(product);
+
+            ViewBag.Genres = new SelectList(await _productData.GetGenresAsync(), "Id", "Name");
+            ViewBag.Authors = new SelectList(await _productData.GetAuthorsAsync(), "Id", "Name");
             return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(ProductEditWebModel model)
+        {
+            if (model is null) return BadRequest();
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Genres = new SelectList(await _productData.GetGenresAsync(), "Id", "Name");
+                ViewBag.Authors = new SelectList(await _productData.GetAuthorsAsync(), "Id", "Name");
+                return View(model);
+            }
+
+            var product = _mapperFromWeb.Map(model);
+
+            if (product.Id == 0)
+                await _productData.AddProductAsync(product);
+            else
+                await _productData.UpdateProductAsync(product);
+
+            return RedirectToAction("Index", "Product");
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -55,6 +83,9 @@ namespace EasyBookStore.Areas.Admin.Controllers
             if (product is null) return NotFound();
 
             var model = _mapperToWeb.Map(product);
+
+            ViewBag.Genres = new SelectList(await _productData.GetGenresAsync(), "Id", "Name");
+            ViewBag.Authors = new SelectList(await _productData.GetAuthorsAsync(), "Id", "Name");
             return View(model);
         }
     }
