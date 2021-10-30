@@ -15,13 +15,13 @@ namespace EasyBookStore.Domain.Models.Order
         [Required]
         public User User { get; set; }
 
-        /// <summary> Телефон </summary>
-        [Required, MaxLength(200)]
-        public string Phone { get; set; }
-
         /// <summary> Адрес доставки </summary>
         [Required, MaxLength(500)]
         public string Address { get; set; }
+
+        /// <summary> Телефон </summary>
+        [Required, MaxLength(200)]
+        public string Phone { get; set; }
 
         /// <summary> Описание заказа </summary>
         public string Description { get; set; }
