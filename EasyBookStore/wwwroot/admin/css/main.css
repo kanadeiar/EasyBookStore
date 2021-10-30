@@ -1,0 +1,21 @@
+﻿@charset "UTF-8";
+
+/* Sticky footer styles -------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    overflow-y: scroll;
+    margin-bottom: 80px;
+    background: #fce6e6;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 50px; /* Vertically center the text there */
+}
