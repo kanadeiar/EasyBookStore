@@ -48,8 +48,7 @@ namespace EasyBookStore.Controllers
             return RedirectToAction("Index", "Cart");
         }
 
-        [Authorize]
-        [HttpPost, ValidateAntiForgeryToken]
+        [Authorize, HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> CheckOut(OrderWebModel orderModel, [FromServices] IOrderService orderService)
         {
             if (!ModelState.IsValid)
