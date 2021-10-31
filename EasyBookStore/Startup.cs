@@ -77,7 +77,7 @@ namespace EasyBookStore
 
             services.AddScoped<ICartStore, CookiesCartStore>();
             services.AddScoped<ICartService, CartService>();
-
+            services.AddScoped<IOrderService, DatabaseOrderData>();
 
             services.AddScoped<IProductData, DatabaseProductData>();
             services.AddScoped<IWorkerData, DatabaseWorkerData>();

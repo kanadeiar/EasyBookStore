@@ -1,4 +1,4 @@
-﻿@model EasyBookStore.WebModels.Cart.CartWebModel
+﻿@model EasyBookStore.WebModels.Order.CartOrderWebModel
 @{
     ViewBag.Title = "Корзина";
 }
@@ -11,7 +11,7 @@
         <div class="col-sm-9">
             <h2 class="text-center display-6">@ViewBag.Title</h2>
 
-            @if (Model.Items.Any())
+            @if (Model.Cart.Items.Any())
             {
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -21,7 +21,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var (product, quantity, priceSum) in Model.Items)
+                            @foreach (var (product, quantity, priceSum) in Model.Cart.Items)
                             {
                                 <tr>
                                     <td>
@@ -54,16 +54,23 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <a asp-controller="Cart" asp-action="Clear" class="btn btn-warning mb-4">Очистить корзину</a>
+                        <a asp-controller="Cart" asp-action="Clear" class="btn btn-outline-warning mb-4">Очистить корзину</a>
                     </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <partial name="Partial/_CheckOutPartial" model="@Model.Order"/>
+
+                    </div>
+
                     <div class="col-md-6">
                         <ul class="list-group">
-                            <li class="list-group-item">Подитог <strong>@Model.PriceSum.ToString("C")</strong></li>
+                            <li class="list-group-item">Подитог <strong>@Model.Cart.PriceSum.ToString("C")</strong></li>
                             <li class="list-group-item">Стоимость доставки <strong>Бесплатно</strong></li>
-                            <li class="list-group-item">Количество товара <strong>@Model.ItemsSum</strong> шт.</li>
-                            <li class="list-group-item list-group-item-primary">Итого <strong>@Model.PriceSum.ToString("C")</strong></li>
+                            <li class="list-group-item">Количество товара <strong>@Model.Cart.ItemsSum</strong> шт.</li>
+                            <li class="list-group-item list-group-item-primary">Итого <strong>@Model.Cart.PriceSum.ToString("C")</strong></li>
                         </ul>
-                        <a class="btn btn-outline-success mt-3" href="#">Оформить заказ</a>
                     </div>
                 </div>
             }

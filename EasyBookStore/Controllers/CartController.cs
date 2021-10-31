@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EasyBookStore.Interfaces.Services;
+using EasyBookStore.WebModels.Order;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EasyBookStore.Controllers
 {
@@ -18,7 +20,7 @@ namespace EasyBookStore.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = await _cartService.GetWebModelAsync();
+            var model = new CartOrderWebModel { Cart = await _cartService.GetWebModelAsync() };
             return View(model);
         }
 
@@ -44,6 +46,26 @@ namespace EasyBookStore.Controllers
         {
             _cartService.Clear();
             return RedirectToAction("Index", "Cart");
+        }
+
+        [Authorize]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> CheckOut(OrderWebModel orderModel, [FromServices] IOrderService orderService)
+        {
+            if (!ModelState.IsValid)
+                return View(nameof(Index), new CartOrderWebModel { Cart = await _cartService.GetWebModelAsync(), Order = orderModel });
+
+            var order = await orderService.CreateOrder(User.Identity.Name, await _cartService.GetWebModelAsync(), orderModel);
+
+            _cartService.Clear();
+
+            return RedirectToAction(nameof(OrderConfirmed), new { order.Id });
+        }
+
+        public IActionResult OrderConfirmed(int id)
+        {
+            ViewBag.OrderId = id;
+            return View();
         }
     }
 }
