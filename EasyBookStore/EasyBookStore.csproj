@@ -22,6 +22,7 @@
     <Folder Include="wwwroot\admin\images\" />
     <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\images\books\" />
+    <Folder Include="wwwroot\images\blog\" />
   </ItemGroup>
 
   <ItemGroup>
