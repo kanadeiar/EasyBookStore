@@ -46,7 +46,9 @@ namespace EasyBookStore.Services.Database
                ? _context.Products
                    .Include(p => p.Genre)
                    .Include(p => p.Author)
-               : _context.Products;
+                   .Where(p => !p.IsDelete)
+               : _context.Products
+                   .Where(p => !p.IsDelete);
 
             if (filter?.Ids?.Length > 0)
             {
@@ -105,10 +107,12 @@ namespace EasyBookStore.Services.Database
 
         public async Task<bool> DeleteProductAsync(int id)
         {
-            if (await GetProductAsync(id) is not { } product)
+            if (await GetProductAsync(id).ConfigureAwait(false) is { } product)
+                product.IsDelete = true;
+            else
                 return false;
-            _context.Remove(product);
             await _context.SaveChangesAsync();
+            _logger.LogInformation($"Товар {id} {product.Name} успешно помечен удаленным из базы данных");
             return true;
         }
     }

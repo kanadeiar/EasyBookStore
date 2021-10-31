@@ -32,5 +32,8 @@ namespace EasyBookStore.Domain.Models
 
         /// <summary> Краткое сообщение о книге </summary>
         public string Message { get; set; }
+
+        /// <summary> Товар удален в корзину </summary>
+        public bool IsDelete { get; set; }
     }
 }

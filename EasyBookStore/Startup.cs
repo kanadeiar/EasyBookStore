@@ -34,7 +34,7 @@ namespace EasyBookStore
             {
                 case "SqlServer":
                     services.AddDbContext<BookStoreContext>(opt =>
-                    opt.UseSqlite(Configuration.GetConnectionString(databaseType)));
+                    opt.UseSqlServer(Configuration.GetConnectionString(databaseType)));
                     break;
                 case "Sqlite":
                     services.AddDbContext<BookStoreContext>(opt =>
