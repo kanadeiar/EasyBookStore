@@ -356,3 +356,4 @@ MigrationBackup/
 **/wwwroot/js/site.min.js.gz
 **/wwwroot/js/site.min.js
 **/wwwroot/js/site.js
+**/EasyBookStore.db

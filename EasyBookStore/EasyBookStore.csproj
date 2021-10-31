@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EasyBookStore.Dal.Sqlite\EasyBookStore.Dal.Sqlite.csproj" />
     <ProjectReference Include="..\EasyBookStore.Dal\EasyBookStore.Dal.csproj" />
     <ProjectReference Include="..\EasyBookStore.Domain\EasyBookStore.Domain.csproj" />
   </ItemGroup>

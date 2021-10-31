@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using EasyBookStore.Dal.Context;
 using EasyBookStore.Data;
 using EasyBookStore.Domain.Models;
@@ -28,8 +28,21 @@ namespace EasyBookStore
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BookStoreContext>(options => 
-                options.UseSqlServer(Configuration.GetConnectionString("SqlServer")/*, o => o.EnableRetryOnFailure()*/));
+            var databaseType = Configuration["Database"];
+
+            switch (databaseType)
+            {
+                case "SqlServer":
+                    services.AddDbContext<BookStoreContext>(opt =>
+                    opt.UseSqlite(Configuration.GetConnectionString(databaseType)));
+                    break;
+                case "Sqlite":
+                    services.AddDbContext<BookStoreContext>(opt =>
+                    opt.UseSqlite(Configuration.GetConnectionString(databaseType),
+                    o => o.MigrationsAssembly("EasyBookStore.Dal.Sqlite")));
+                    break;
+                default: throw new InvalidOperationException($"Тип БД {databaseType} не поддерживается");
+            }
 
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<BookStoreContext>()
