@@ -1,5 +1,8 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
+using EasyBookStore.Domain.Common;
 using EasyBookStore.Interfaces.Services;
+using EasyBookStore.Services;
 using EasyBookStore.WebModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -10,49 +13,24 @@ namespace EasyBookStore.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IProductData _productData;
-        public HomeController(IConfiguration configuration, IProductData productData)
+        private readonly IMapper<ProductWebModel> _mapper;
+
+        public HomeController(IConfiguration configuration, IProductData productData, IMapper<ProductWebModel> mapper)
         {
             _configuration = configuration;
             _productData = productData;
+            _mapper = mapper;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var products = _productData.GetProducts();
-            var genresPool = _productData.GetGenres().ToDictionary(g => g.Id);
-            var authorsPool = _productData.GetAuthors().ToDictionary(a => a.Id);
+            var model = (await _productData.GetProductsAsync(new ProductFilter {Ids = new []{1, 2, 3}}))
+                .Select(p => _mapper.Map(p));
 
-            var model = products.Take(3).Select(p => new ProductWebModel
-            {
-                Id = p.Id,
-                Genre = genresPool[p.GenreId]?.Name ?? "<Неизвестный>",
-                Author = authorsPool[p.AuthorId ?? 0]?.Name ?? "<Неизвестный>",                
-                Name = p.Name,
-                ImageUrl = p.ImageUrl,
-                Price = p.Price,
-                Message = p.Message,
-            });
+            ViewBag.NewBooks = (await _productData.GetProductsAsync(new ProductFilter { Ids = new[] { 4, 5, 6 } }))
+                .Select(p => _mapper.Map(p));
 
-            ViewBag.NewBooks = products.Skip(3).Take(3).Select(p => new ProductWebModel
-            {
-                Id = p.Id,
-                Genre = genresPool[p.GenreId]?.Name ?? "<Неизвестный>",
-                Author = authorsPool[p.AuthorId ?? 0]?.Name ?? "<Неизвестный>",
-                Name = p.Name,
-                ImageUrl = p.ImageUrl,
-                Price = p.Price,
-                Message = p.Message,
-            });
-
-            ViewBag.RecommendedBooks = products.Take(8).Select(p => new ProductWebModel
-            {
-                Id = p.Id,
-                Genre = genresPool[p.GenreId]?.Name ?? "<Неизвестный>",
-                Author = authorsPool[p.AuthorId ?? 0]?.Name ?? "<Неизвестный>",
-                Name = p.Name,
-                ImageUrl = p.ImageUrl,
-                Price = p.Price,
-                Message = p.Message,
-            });
+            ViewBag.RecommendedBooks = (await _productData.GetProductsAsync(new ProductFilter { Ids = new[] { 1, 2, 3, 4, 5, 6, 7, 8 } }))
+                .Select(p => _mapper.Map(p));
 
             return View(model);
         }
@@ -69,7 +47,6 @@ namespace EasyBookStore.Controllers
                 default: return Content($"Status --- {id}");
                 case "404": return View("Error404");
             }
-            
         }
     }
 }

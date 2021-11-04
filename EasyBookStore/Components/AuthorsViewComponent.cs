@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using EasyBookStore.Interfaces.Services;
 using EasyBookStore.WebModels;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +13,10 @@ namespace EasyBookStore.Components
         {
             _productData = productData;
         }
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            var authors = _productData.GetAuthorsWithProducts().OrderBy(a => a.Order).Select(a => new AuthorWebModel
+            var authors = (await _productData.GetAuthorsAsync())
+                .OrderBy(a => a.Order).Select(a => new AuthorWebModel
             {
                 Id = a.Id,
                 Name = a.Name,

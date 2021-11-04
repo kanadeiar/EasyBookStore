@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using EasyBookStore.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using EasyBookStore.Domain.Models.Identity;
+using EasyBookStore.Services;
 
 namespace EasyBookStore.Controllers
 {
@@ -19,11 +20,18 @@ namespace EasyBookStore.Controllers
     {
         private readonly IWorkerData _workerData;
         private readonly ILogger<WorkerController> _logger;
+        private readonly IMapper<WorkerDetailsWebModel> _detailsMapper;
+        private readonly IMapper<WorkerEditWebModel> _editMapper;
+        private readonly IMapper<Worker> _workerMapper;
 
-        public WorkerController(IWorkerData workerData, ILogger<WorkerController> logger)
+        public WorkerController(IWorkerData workerData, ILogger<WorkerController> logger, 
+            IMapper<WorkerDetailsWebModel> detailsMapper, IMapper<WorkerEditWebModel> editMapper, IMapper<Worker> workerMapper)
         {
             _workerData = workerData;
             _logger = logger;
+            _detailsMapper = detailsMapper;
+            _editMapper = editMapper;
+            _workerMapper = workerMapper;
         }   
 
         public async Task<IActionResult> Index()
@@ -40,14 +48,7 @@ namespace EasyBookStore.Controllers
 
             if (worker is null) return NotFound();
 
-            var workerWebModel = new WorkerDetailsWebModel
-            {
-                Id = worker.Id,
-                FirstName = worker.FirstName,
-                LastName = worker.LastName,
-                Patronymic = worker.Patronymic,
-                Age = worker.Age,
-            };
+            var workerWebModel = _detailsMapper.Map(worker);
             return View(workerWebModel);
         }
 
@@ -60,19 +61,12 @@ namespace EasyBookStore.Controllers
         [Authorize(Roles = Role.Administrators)]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id is null) return View(new WorkerEditWebModel());
+            if (id is not { } workerId) return View(new WorkerEditWebModel());
 
-            var worker = await _workerData.Get((int)id);
+            var worker = await _workerData.Get(workerId);
             if (worker is null) return NotFound();
 
-            var model = new WorkerEditWebModel
-            {
-                Id = worker.Id,
-                FirstName = worker.FirstName,
-                LastName = worker.LastName,
-                Patronymic = worker.Patronymic,
-                Age = worker.Age,
-            };
+            var model = _editMapper.Map(worker);
             return View(model);
         }
 
@@ -88,14 +82,7 @@ namespace EasyBookStore.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var worker = new Worker
-            {
-                Id = model.Id,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Patronymic = model.Patronymic,
-                Age = model.Age,
-            };
+            var worker = _workerMapper.Map(model);
             if (worker.Id == 0)
                 await _workerData.Add(worker);
             else
@@ -111,14 +98,7 @@ namespace EasyBookStore.Controllers
             var worker = await _workerData.Get(id);
             if (worker is null) return NotFound();
 
-            var model = new WorkerEditWebModel
-            {
-                Id = worker.Id,
-                FirstName = worker.FirstName,
-                LastName = worker.LastName,
-                Patronymic = worker.Patronymic,
-                Age = worker.Age,
-            };
+            var model = _editMapper.Map(worker);
             return View(model);
         }
 

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.11">
       <PrivateAssets>all</PrivateAssets>
@@ -16,13 +17,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\admin\fonts\" />
+    <Folder Include="wwwroot\admin\js\" />
+    <Folder Include="wwwroot\admin\images\" />
     <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\images\books\" />
+    <Folder Include="wwwroot\images\blog\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EasyBookStore.Dal.Sqlite\EasyBookStore.Dal.Sqlite.csproj" />
     <ProjectReference Include="..\EasyBookStore.Dal\EasyBookStore.Dal.csproj" />
     <ProjectReference Include="..\EasyBookStore.Domain\EasyBookStore.Domain.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

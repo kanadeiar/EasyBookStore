@@ -5,7 +5,7 @@
     ViewBag.Title = "Сотрудники магазина";
 }
 
-<div class="container">
+<div class="container-md">
     <h1>@ViewBag.Title</h1>
     <hr />
     <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Главная страница</a>
@@ -19,52 +19,54 @@
             </p>
         </div>
     }
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>№</th>
-                <th>Фамилия</th>
-                <th>Имя</th>
-                <th>Отчество</th>
-                <th>Возраст</th>
-                <th></th>
-                @if (User.IsInRole(Role.Administrators))
-                {
-                    <th></th>
-                    <th></th>
-                }
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var worker in Model)
-            {
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>@worker.Id</td>
-                    <td>@worker.LastName</td>
-                    <td>@worker.FirstName</td>
-                    <td>@worker.Patronymic</td>
-                    <td>@worker.Age</td>
-                    <td>
-                        <a class="btn btn-outline-info" asp-controller="Worker" asp-action="Details" asp-route-id="@worker.Id">
-                            <i class="fas fa-info"></i>
-                        </a>
-                    </td>
+                    <th>№</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th>Возраст</th>
+                    <th></th>
                     @if (User.IsInRole(Role.Administrators))
                     {
-                        <td>
-                            <a class="btn btn-outline-dark" asp-controller="Worker" asp-action="Edit" asp-route-id="@worker.Id">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a class="btn btn-outline-danger" asp-controller="Worker" asp-action="Delete" asp-route-id="@worker.Id">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </td>
+                        <th></th>
+                        <th></th>
                     }
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var worker in Model)
+                {
+                    <tr>
+                        <td>@worker.Id</td>
+                        <td>@worker.LastName</td>
+                        <td>@worker.FirstName</td>
+                        <td>@worker.Patronymic</td>
+                        <td>@worker.Age</td>
+                        <td>
+                            <a class="btn btn-outline-info" asp-controller="Worker" asp-action="Details" asp-route-id="@worker.Id">
+                                <i class="fas fa-info"></i>
+                            </a>
+                        </td>
+                        @if (User.IsInRole(Role.Administrators))
+                        {
+                            <td>
+                                <a class="btn btn-outline-dark" asp-controller="Worker" asp-action="Edit" asp-route-id="@worker.Id">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-danger" asp-controller="Worker" asp-action="Delete" asp-route-id="@worker.Id">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
 </div>

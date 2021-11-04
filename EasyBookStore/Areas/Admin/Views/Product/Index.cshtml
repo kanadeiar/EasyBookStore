@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ProductEditWebModel>
+@{
+    ViewBag.Title = "Редактирование товаров";
+}
+
+<div class="container-md">
+    <div class="row">
+        <div class="col-sm-3">
+            <partial name="Partial/_LeftSidebarPartial" />
+        </div>
+        <div class="col-sm-9">
+            <h1>@ViewBag.Title</h1>
+
+            <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="btn btn-outline-success">
+                Создать нового сотрудника
+            </a>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th><label>№</label></th>
+                            <th></th>
+                            <th>@Html.DisplayNameFor(m => m.Id)</th>
+                            <th>@Html.DisplayNameFor(m => m.Name)</th>
+                            <th>@Html.DisplayNameFor(m => m.GenreName)</th>
+                            <th>@Html.DisplayNameFor(m => m.AuthorName)</th>
+                            <th>@Html.DisplayNameFor(m => m.ImageUrl)</th>
+                            <th>@Html.DisplayNameFor(m => m.Price)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ var index = 1; }
+                        @foreach (var product in Model)
+                        {
+                            <tr>
+                                <td>@(index++)</td>
+                                <td>
+                                    <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-outline-primary">
+                                        <i class="fas fa-edit"></i>Редакт.
+                                    </a>
+                                </td>
+                                <td>@Html.DisplayFor(_ => product.Id)</td>
+                                <td>@Html.DisplayFor(_ => product.Name)</td>
+                                <td>@Html.DisplayFor(_ => product.GenreName)</td>
+                                <td>@Html.DisplayFor(_ => product.AuthorName)</td>
+                                <td>
+                                    <img src="~/images/books/@product.ImageUrl" width="50" alt="@product.Name" />
+                                </td>
+                                <td>@Html.DisplayFor(_ => product.Price)</td>
+                                <td>
+                                    <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-outline-danger">
+                                        <i class="fas fa-trash"></i>Удалить
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

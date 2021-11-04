@@ -1,0 +1,76 @@
+﻿@model EasyBookStore.WebModels.Order.CartOrderWebModel
+@{
+    ViewBag.Title = "Корзина";
+}
+
+<div class="container-md">
+    <div class="row">
+        <div class="col-sm-3">
+            <partial name="Partial/_LeftSidebarPartial" />
+        </div>
+        <div class="col-sm-9">
+            <h2 class="text-center display-6">@ViewBag.Title</h2>
+
+            @if (Model.Cart.Items.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Название</th>
+                                <th>Цена</th>
+                                <th>Количество</th>
+                                <th>Итого</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var (product, quantity, priceSum) in Model.Cart.Items)
+                            {
+                                <tr>
+                                    <td>
+                                        <a asp-controller="Catalog" asp-action="Details" asp-route-id="@product.Id">
+                                            <img src="~/images/books/@product.ImageUrl" alt="@product.Name" width="100" />
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Catalog" asp-action="Details" asp-route-id="@product.Id" class="h4 text-decoration-none text-dark">
+                                            @product.Name
+                                        </a>
+                                        <p>Артикул: @product.Id.ToString("0000000")</p>
+                                    </td>
+                                    <td>@product.Price.ToString("C")</td>
+                                    <td>
+                                        <div class="input-group mb-3">
+                                            <a class="btn btn-outline-secondary" asp-action="Add" asp-route-id="@product.Id">+</a>
+                                            <input type="text" class="form-control" value="@quantity" readonly>
+                                            <a class="btn btn-outline-secondary" asp-action="Decrement" asp-route-id="@product.Id">-</a>
+                                        </div>
+                                    </td>
+                                    <td>@priceSum.ToString("C")</td>
+                                    <td>
+                                        <a asp-action="Remove" asp-route-id="@product.Id" class="btn btn-outline-danger"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <a asp-controller="Cart" asp-action="Clear" class="btn btn-outline-warning mb-4">Очистить корзину</a>
+                    </div>
+                </div>
+
+                <partial name="Partial/_CheckOutPartial" model="@Model.Order" 
+                         view-data="@(new ViewDataDictionary(ViewData) { { "TotalPrice", Model.Cart.PriceSum }, { "ItemsSum", Model.Cart.ItemsSum } })"/>
+            }
+            else
+            {
+                <p>Ваша корзина с товарами пуста</p>
+            }
+
+        </div>
+    </div>
+</div>

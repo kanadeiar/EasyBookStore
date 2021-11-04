@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using EasyBookStore.Interfaces.Services;
 using EasyBookStore.WebModels;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,9 @@ namespace EasyBookStore.Components
             _productData = productData;
         }
 
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            var genres = _productData.GetGenresWithProducts();
+            var genres = await _productData.GetGenresAsync();
             var parents = genres.Where(g => g.ParentId is null);
 
             var parentsViews = parents.Select(p => new GenreWebModel
