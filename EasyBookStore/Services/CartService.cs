@@ -75,17 +75,18 @@ namespace EasyBookStore.Services
             _cartStore.Cart = cart;
         }
 
-        public CartWebModel GetWebModel()
+        public async Task<CartWebModel> GetWebModelAsync()
         {
-            var products = _productData.GetProducts(new ProductFilter
+            var products = await _productData.GetProductsAsync(new ProductFilter
             {
                 Ids = _cartStore.Cart.Items.Select(i => i.ProductId).ToArray()
             });
+
             var productWebs = products.Select(p => new ProductWebModel
             {
                 Id = p.Id,
-                Author = p.Author.Name,
-                Genre = p.Genre.Name,
+                AuthorName = p.Author?.Name,
+                GenreName = p.Genre?.Name,
                 Name = p.Name,
                 ImageUrl = p.ImageUrl,
                 Price = p.Price,

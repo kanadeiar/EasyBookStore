@@ -14,9 +14,9 @@ namespace EasyBookStore.Components
         {
             _cartService = cartService;
         }
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            ViewBag.ProductsInCartCount = (_cartService.GetWebModel()).ItemsSum;
+            ViewBag.ProductsInCartCount = (await _cartService.GetWebModelAsync()).ItemsSum;
             return View();
         }
     }

@@ -1,4 +1,5 @@
-﻿using EasyBookStore.Dal.Context;
+﻿using System;
+using EasyBookStore.Dal.Context;
 using EasyBookStore.Domain.Common;
 using EasyBookStore.Domain.Models;
 using EasyBookStore.Interfaces.Services;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EasyBookStore.Services.Database
 {
@@ -19,39 +21,34 @@ namespace EasyBookStore.Services.Database
             _context = context;
             _logger = logger;
         }
-        public IEnumerable<Genre> GetGenres()
+
+        public async Task<IEnumerable<Genre>> GetGenresAsync()
         {
-            return _context.Genres;
+            return await _context.Genres.Include(g => g.Products).ToArrayAsync().ConfigureAwait(false);
+        }
+        public async Task<Genre> GetGenreAsync(int id)
+        {
+            return await _context.Genres.Include(g => g.Products).SingleOrDefaultAsync(g => g.Id == id).ConfigureAwait(false);
         }
 
-        public Genre GetGenre(int id)
+        public async Task<IEnumerable<Author>> GetAuthorsAsync()
         {
-            return _context.Genres.SingleOrDefault(g => g.Id == id);
+            return await _context.Authors.Include(a => a.Products).ToArrayAsync().ConfigureAwait(false);
+        }
+        public async Task<Author> GetAuthorAsync(int id)
+        {
+            return await _context.Authors.Include(a => a.Products).SingleOrDefaultAsync(a => a.Id == id).ConfigureAwait(false);
         }
 
-        public IEnumerable<Genre> GetGenresWithProducts()
+        public async Task<IEnumerable<Product>> GetProductsAsync(ProductFilter filter = null, bool includes = false)
         {
-            return _context.Genres.Include(g => g.Products);
-        }
-        public IEnumerable<Author> GetAuthors()
-        {
-            return _context.Authors;
-        }
-
-        public Author GetAuthor(int id)
-        {
-            return _context.Authors.SingleOrDefault(a => a.Id == id);
-        }
-
-        public IEnumerable<Author> GetAuthorsWithProducts()
-        {
-            return _context.Authors.Include(a => a.Products);
-        }
-        public IEnumerable<Product> GetProducts(ProductFilter filter = null)
-        {
-            IQueryable<Product> query = _context.Products
-                .Include(p => p.Genre)
-                .Include(p => p.Author);
+            IQueryable<Product> query = (includes)
+               ? _context.Products
+                   .Include(p => p.Genre)
+                   .Include(p => p.Author)
+                   .Where(p => !p.IsDelete)
+               : _context.Products
+                   .Where(p => !p.IsDelete);
 
             if (filter?.Ids?.Length > 0)
             {
@@ -65,16 +62,58 @@ namespace EasyBookStore.Services.Database
                 if (filter?.AuthorId is { } author)
                     query = query.Where(p => p.AuthorId == author);
             }
-            _logger.LogInformation($"SQL: {query.ToQueryString()}");
-            return query;
-        }
 
-        public Product GetProduct(int id)
+            _logger.LogInformation($"SQL: {query.ToQueryString()}");
+
+            return await query.ToArrayAsync().ConfigureAwait(false);
+        }
+        public async Task<Product> GetProductAsync(int id)
         {
-            return _context.Products
+            return await _context.Products
                 .Include(p => p.Genre)
                 .Include(p => p.Author)
-                .SingleOrDefault(p => p.Id == id);
+                .SingleOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
+        }
+
+        public async Task<int> AddProductAsync(Product product)
+        {
+            if (product is null)
+                throw new ArgumentNullException(nameof(product));
+            _context.Add(product);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+            return product.Id;
+        }
+
+        public async Task UpdateProductAsync(Product product)
+        {
+            if (product is null)
+                throw new ArgumentNullException(nameof(product));
+            if (_context.Products.Local.Any(e => e == product) == false)
+            {
+                var origin = await _context.Products.FindAsync(product.Id).ConfigureAwait(false);
+                origin.Name = product.Name;
+                origin.Order = product.Order;
+                origin.GenreId = product.GenreId;
+                origin.AuthorId = product.AuthorId;
+                origin.ImageUrl = product.ImageUrl;
+                origin.Price = product.Price;
+                origin.Message = product.Message;
+                _context.Update(origin);
+            }
+            else
+                _context.Update(product);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task<bool> DeleteProductAsync(int id)
+        {
+            if (await GetProductAsync(id).ConfigureAwait(false) is { } product)
+                product.IsDelete = true;
+            else
+                return false;
+            await _context.SaveChangesAsync();
+            _logger.LogInformation($"Товар {id} {product.Name} успешно помечен удаленным из базы данных");
+            return true;
         }
     }
 }

@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Заказ подтвержден";
+}
+
+<div class="container-md">
+    <div class="row">
+        <div class="col-sm-3">
+            <partial name="Partial/_LeftSidebarPartial" />
+        </div>
+        <div class="col-sm-9">
+            <h2 class="text-center display-6">@ViewBag.Title</h2>
+
+            <p>Заказ № @ViewBag.OrderId сформирован и в скором времени будет обработан.</p>
+        </div>
+    </div>
+</div>

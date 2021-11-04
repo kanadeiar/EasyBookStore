@@ -1,27 +1,30 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using EasyBookStore.Domain.Common;
 using EasyBookStore.Domain.Models;
-using Microsoft.VisualBasic;
 
 namespace EasyBookStore.Interfaces.Services
 {
+    /// <summary> Каталог товаров </summary>
     public interface IProductData
     {
         /// <summary> Получить жанры книг </summary>
-        IEnumerable<Genre> GetGenres();
+        Task<IEnumerable<Genre>> GetGenresAsync();
         /// <summary> Получить жанр книги </summary>
-        Genre GetGenre(int id);
-        /// <summary> Получить жанры книг с товарами </summary>
-        IEnumerable<Genre> GetGenresWithProducts();
+        Task<Genre> GetGenreAsync(int id);
         /// <summary> Получить авторов книг </summary>
-        IEnumerable<Author> GetAuthors();
+        Task<IEnumerable<Author>> GetAuthorsAsync();
         /// <summary> Получить одного автора </summary>
-        Author GetAuthor(int id);
-        /// <summary> Получить авторов книг с товарами </summary>
-        IEnumerable<Author> GetAuthorsWithProducts();
+        Task<Author> GetAuthorAsync(int id);
         /// <summary> Получить товары-книги </summary>
-        public IEnumerable<Product> GetProducts(ProductFilter filter = null);
+        Task<IEnumerable<Product>> GetProductsAsync(ProductFilter filter = null, bool includes = false);
         /// <summary> Получить один товар-книгу </summary>
-        Product GetProduct(int id);
+        Task<Product> GetProductAsync(int id);
+        /// <summary> Добавить товар </summary>
+        Task<int> AddProductAsync(Product product);
+        /// <summary> Обновить товар </summary>
+        Task UpdateProductAsync(Product product);
+        /// <summary> Удалить товар </summary>
+        Task<bool> DeleteProductAsync(int id);
     }
 }

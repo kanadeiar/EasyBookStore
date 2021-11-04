@@ -17,11 +17,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\admin\fonts\" />
+    <Folder Include="wwwroot\admin\js\" />
+    <Folder Include="wwwroot\admin\images\" />
     <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\images\books\" />
+    <Folder Include="wwwroot\images\blog\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EasyBookStore.Dal.Sqlite\EasyBookStore.Dal.Sqlite.csproj" />
     <ProjectReference Include="..\EasyBookStore.Dal\EasyBookStore.Dal.csproj" />
     <ProjectReference Include="..\EasyBookStore.Domain\EasyBookStore.Domain.csproj" />
   </ItemGroup>

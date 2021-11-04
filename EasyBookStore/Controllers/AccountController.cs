@@ -62,6 +62,8 @@ namespace EasyBookStore.Controllers
         [AllowAnonymous]
         public IActionResult Login(string returnUrl)
         {
+            if (returnUrl == "/Account/Login")
+                returnUrl = "/";
             return View(new LoginWebModel { ReturnUrl = returnUrl });
         }
 

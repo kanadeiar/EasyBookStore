@@ -1,4 +1,5 @@
-﻿using EasyBookStore.WebModels.Cart;
+﻿using System.Threading.Tasks;
+using EasyBookStore.WebModels.Cart;
 
 namespace EasyBookStore.Interfaces.Services
 {
@@ -14,6 +15,6 @@ namespace EasyBookStore.Interfaces.Services
         /// <summary> Очистить корзину </summary>
         void Clear();
         /// <summary> Получить вебмодель корзины </summary>
-        CartWebModel GetWebModel();
+        Task<CartWebModel> GetWebModelAsync();
     }
 }

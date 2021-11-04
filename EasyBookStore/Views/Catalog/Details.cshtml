@@ -24,8 +24,8 @@
                         <p>@Model.Message</p>
                         <p><b>Доступность:</b> На складе</p>
                         <p><b>Состояние:</b> Новое</p>
-                        <p><b>Жанр:</b> @Model.Genre</p>
-                        <p><b>Автор:</b> @Model.Author</p>
+                        <p><b>Жанр:</b> @Model.GenreName</p>
+                        <p><b>Автор:</b> @Model.AuthorName</p>
                         <span>
                             <span>Цена: @Model.Price.ToString("C")</span>
                             <a class="btn btn-outline-success" asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id">

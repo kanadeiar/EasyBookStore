@@ -1,13 +1,14 @@
-using System;
+﻿using System;
 using EasyBookStore.Dal.Context;
 using EasyBookStore.Data;
+using EasyBookStore.Domain.Models;
 using EasyBookStore.Domain.Models.Identity;
 using EasyBookStore.Infrastructure.Middleware;
 using EasyBookStore.Interfaces.Services;
 using EasyBookStore.Services;
 using EasyBookStore.Services.Cookies;
 using EasyBookStore.Services.Database;
-using EasyBookStore.Services.Memory;
+using EasyBookStore.WebModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -27,8 +28,21 @@ namespace EasyBookStore
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BookStoreContext>(options => 
-                options.UseSqlServer(Configuration.GetConnectionString("SqlServer")/*, o => o.EnableRetryOnFailure()*/));
+            var databaseType = Configuration["Database"];
+
+            switch (databaseType)
+            {
+                case "SqlServer":
+                    services.AddDbContext<BookStoreContext>(opt =>
+                    opt.UseSqlServer(Configuration.GetConnectionString(databaseType)));
+                    break;
+                case "Sqlite":
+                    services.AddDbContext<BookStoreContext>(opt =>
+                    opt.UseSqlite(Configuration.GetConnectionString(databaseType),
+                    o => o.MigrationsAssembly("EasyBookStore.Dal.Sqlite")));
+                    break;
+                default: throw new InvalidOperationException($"Тип БД {databaseType} не поддерживается");
+            }
 
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<BookStoreContext>()
@@ -65,15 +79,25 @@ namespace EasyBookStore
 
             services.AddTransient<EasyBookStoreDbInitializer>();
 
+            services.AddScoped<IMapper<ProductWebModel>, WebMapperService>();
+            services.AddScoped<IMapper<WorkerDetailsWebModel>, WebMapperService>();
+            services.AddScoped<IMapper<WorkerEditWebModel>, WebMapperService>();
+            services.AddScoped<IMapper<Worker>, WebMapperService>();
+            services.AddScoped<IMapper<ProductEditWebModel>, WebMapperService>();
+            services.AddScoped<IMapper<Product>, WebMapperService>();
+
+            services.AddTransient<WebMapperService>();
+
             services.AddScoped<ICartStore, CookiesCartStore>();
             services.AddScoped<ICartService, CartService>();
+            services.AddScoped<IOrderService, DatabaseOrderData>();
 
-            services.AddSingleton<IWorkerData, InMemoryWorkerData>();
-            //services.AddSingleton<IProductData, InMemoryProductData>();
             services.AddScoped<IProductData, DatabaseProductData>();
+            services.AddScoped<IWorkerData, DatabaseWorkerData>();
 
-            services.AddControllersWithViews()
-                .AddRazorRuntimeCompilation();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+            services.AddRazorPages();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -96,7 +120,14 @@ namespace EasyBookStore
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
                 endpoints.MapDefaultControllerRoute();
+
+                endpoints.MapRazorPages();
             });
         }
     }

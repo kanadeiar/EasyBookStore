@@ -11,12 +11,14 @@ namespace EasyBookStore.Domain.Models
 
         /// <summary> Жанр </summary>
         public int GenreId { get; set; }
+
         /// <summary> Жанр </summary>
         [ForeignKey(nameof(GenreId))]
         public Genre Genre { get; set; }
 
         /// <summary> Автор </summary>
         public int? AuthorId { get; set; }
+
         /// <summary> Автор </summary>
         [ForeignKey(nameof(AuthorId))]
         public Author Author { get; set; }
@@ -30,5 +32,8 @@ namespace EasyBookStore.Domain.Models
 
         /// <summary> Краткое сообщение о книге </summary>
         public string Message { get; set; }
+
+        /// <summary> Товар удален в корзину </summary>
+        public bool IsDelete { get; set; }
     }
 }

@@ -1,0 +1,77 @@
+﻿@model ProductEditWebModel
+@{
+    ViewBag.Title = "Редактирование товара";
+}
+
+<div class="container-md">
+    <div class="row">
+        <div class="col-sm-3">
+            <partial name="Partial/_LeftSidebarPartial" />
+        </div>
+        <div class="col-sm-9">
+            <h1>@ViewBag.Title</h1>
+
+            <hr />
+            <a class="btn btn-outline-secondary" asp-area="Admin" asp-controller="Product" asp-action="Index">Редактирование всего каталога</a>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <form asp-action="Edit" asp-antiforgery="true">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" placeholder="Введите название книги"/>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Order" class="control-label"></label>
+                            <input asp-for="Order" class="form-control" />
+                            <span asp-validation-for="Order" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="GenreId" class="control-label"></label>
+                            <select asp-for="GenreId" asp-items="ViewBag.Genres" class="form-select"></select>
+                            <span asp-validation-for="GenreId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="AuthorId" class="control-label"></label>
+                            <select asp-for="AuthorId" asp-items="ViewBag.Authors" class="form-select"></select>
+                            <span asp-validation-for="AuthorId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ImageUrl" class="control-label"></label>
+                            <input asp-for="ImageUrl" class="form-control" placeholder="Введите название файла изображения"/>
+                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                            <img src="~/images/books/@Model.ImageUrl" width="200" alt="@Model.Name" class="mt-2"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Price" class="control-label"></label>
+                            <input asp-for="Price" class="form-control" placeholder="Введите цену книги"/>
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Message" class="control-label"></label>
+                            <textarea asp-for="Message" class="form-control" rows="4" placeholder="Введите краткое сообщение о книге"></textarea>
+                            <span asp-validation-for="Message" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <input type="submit" value="Сохранить" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

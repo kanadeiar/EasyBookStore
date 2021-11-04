@@ -1,0 +1,52 @@
+﻿@model EasyBookStore.WebModels.Order.OrderWebModel
+
+
+<form asp-action="CheckOut" asp-antiforgery="true">
+    <div class="row mt-3">
+        <div class="col-md-6">
+
+            <div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="Phone" class="control-label"></label>
+                    <input asp-for="Phone" class="form-control" placeholder="Введите свой Телефон" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Address" class="control-label"></label>
+                    <input asp-for="Address" class="form-control" placeholder="Введите свой Адрес доставки" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" placeholder="Введите Описание своего заказа" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item">Подитог <strong>@ViewBag.TotalPrice.ToString("C")</strong></li>
+                <li class="list-group-item">Стоимость доставки <strong>Бесплатно</strong></li>
+                <li class="list-group-item">Количество товара <strong>@ViewBag.ItemsSum</strong> шт.</li>
+                <li class="list-group-item list-group-item-primary">Итого <strong>@ViewBag.TotalPrice.ToString("C")</strong></li>
+            </ul>
+
+            <div class="form-group mt-3">
+                <a class="btn btn-outline-secondary" href="">Обновить</a>
+
+                <input class="btn btn-outline-success" type="submit" value="Оформить заказ" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
